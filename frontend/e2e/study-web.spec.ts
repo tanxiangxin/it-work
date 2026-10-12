@@ -29,7 +29,7 @@ test('来源默认收起，学习记录按分类仅展示标题，点击查看�
   await expect(page.getByRole('button', { name: '搜索课程资料', exact: true })).toBeEnabled();
   await page.getByLabel('学习问题或主题').fill('量子纠缠是什么？');
   await page.getByRole('button', { name: '根据资料回答', exact: true }).click();
-  await expect(page.getByText('本回答未来自课程知识库，仅供参考', { exact: true })).toHaveCount(1);
+  await expect(page.getByText('本回答来自联网搜索，仅供参考', { exact: true })).toHaveCount(1);
   await expect(page.getByRole('link', { name: '权威物理学网页' })).toHaveCount(0);
   await page.getByRole('button', { name: '展开网页来源（1）', exact: true }).click();
   await expect(page.getByRole('link', { name: '权威物理学网页' })).toHaveAttribute('href', 'https://example.org/physics');

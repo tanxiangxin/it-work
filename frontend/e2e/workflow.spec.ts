@@ -8,6 +8,7 @@ async function login(page:Page,role:'student'|'admin') {
   await expect(page.getByText('校园服务 / 知识问答')).toBeVisible();
 }
 test('上传 → 引用问答 → 草稿确认 → 人工回复 → 学生关闭',async({browser})=>{
+  const ticketTitle = process.env.E2E_WORKFLOW_TITLE || `E2E VPN 809 服务请求 ${Date.now()}`;
   const a=await browser.newContext(),s=await browser.newContext();
   const admin=await a.newPage(),student=await s.newPage();
   await login(admin,'admin');
@@ -24,18 +25,18 @@ test('上传 → 引用问答 → 草稿确认 → 人工回复 → 学生关闭
   await student.locator('.ant-drawer-open .ant-drawer-close').click();
   await student.getByRole('button',{name:'未解决？创建工单'}).click();
   await expect(student.getByText('确认工单内容',{exact:true})).toBeVisible();
-  await student.getByLabel('问题标题').fill('E2E VPN 809 服务请求');
+  await student.getByLabel('问题标题').fill(ticketTitle);
   await student.getByRole('button',{name:'确认提交工单'}).click();
-  await expect(student.getByText('E2E VPN 809 服务请求',{exact:true}).first()).toBeVisible();
+  await expect(student.getByText(ticketTitle,{exact:true}).first()).toBeVisible();
   await student.locator('.ant-drawer-open .ant-drawer-close').click();
   await admin.getByRole('menuitem',{name:'工单工作台'}).click();
-  await admin.getByRole('button',{name:'E2E VPN 809 服务请求',exact:true}).click();
+  await admin.getByRole('button',{name:ticketTitle,exact:true}).click();
   await admin.getByRole('button',{name:'标记为处理中',exact:true}).click();
   await admin.getByLabel('工单回复',{exact:true}).fill('已检查 VPN 服务，请重试。');
   await admin.getByRole('button',{name:'发送回复',exact:true}).click();
   await admin.getByRole('button',{name:'标记为已解决',exact:true}).click();
   await student.getByRole('menuitem',{name:'我的工单'}).click();
-  await student.getByRole('button',{name:'E2E VPN 809 服务请求',exact:true}).click();
+  await student.getByRole('button',{name:ticketTitle,exact:true}).click();
   await expect(student.getByText('已检查 VPN 服务，请重试。',{exact:true})).toBeVisible();
   await student.getByRole('button',{name:'确认解决并关闭',exact:true}).click();
   await expect(student.getByText('工单已关闭，记录已保留。',{exact:true})).toBeVisible();

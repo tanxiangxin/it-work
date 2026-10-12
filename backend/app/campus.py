@@ -1,10 +1,13 @@
 import asyncio
 import time
 import uuid
+from datetime import date, datetime, timedelta
+from datetime import time as datetime_time
 from typing import Literal
+from zoneinfo import ZoneInfo
 
-from fastapi import APIRouter, Depends, File, Request, UploadFile
-from sqlalchemy import delete, func, select, update
+from fastapi import APIRouter, Depends, File, Query, Request, UploadFile
+from sqlalchemy import delete, func, or_, select, update
 from sqlalchemy.exc import IntegrityError
 
 from app import models as m
@@ -14,6 +17,8 @@ from app.campus_schemas import (
     NoticeCategory,
     NoticeExtractInput,
     NoticeInput,
+    PracticeGrade,
+    PracticeSubmission,
     SavedInput,
     StudyInput,
     StudyOutput,
@@ -106,6 +111,9 @@ def list_notices(
     page_size: Size = 20,
     category: NoticeCategory | None = None,
     saved: bool = False,
+    q: str = Query(default="", max_length=160),
+    published_from: date | None = None,
+    published_to: date | None = None,
     user=Depends(current_user),
     db=Depends(get_db),
 ):
@@ -116,6 +124,20 @@ def list_notices(
         query = query.where(m.Announcement.category == category)
     if saved:
         query = query.join(m.SavedAnnouncement).where(m.SavedAnnouncement.user_id == user.id)
+    if q.strip():
+        query = query.where(m.Announcement.title.icontains(q.strip(), autoescape=True))
+    if published_from and published_to and published_from > published_to:
+        raise AppError("INVALID_RANGE", "开始日期不能晚于结束日期")
+    if published_from:
+        query = query.where(
+            m.Announcement.published_at
+            >= datetime.combine(published_from, datetime_time(), ZoneInfo("Asia/Shanghai"))
+        )
+    if published_to:
+        query = query.where(
+            m.Announcement.published_at
+            <= datetime.combine(published_to, datetime_time.max, ZoneInfo("Asia/Shanghai"))
+        )
     return page_result(db, query, page, page_size, lambda row: notice_data(db, row, user))
 
 
@@ -225,13 +247,39 @@ def todos(
     page: Page = 1,
     page_size: Size = 20,
     completed: bool | None = None,
+    q: str = Query(default="", max_length=160),
+    due: Literal["today", "upcoming", "overdue"] | None = None,
     user=Depends(current_user),
     db=Depends(get_db),
 ):
     query = select(m.Todo).where(m.Todo.user_id == user.id)
     if completed is not None:
         query = query.where(m.Todo.completed == completed)
-    return page_result(db, query, page, page_size, lambda row: todo_data(db, row))
+    if q.strip():
+        query = query.where(m.Todo.title.icontains(q.strip(), autoescape=True))
+    now = m.now()
+    today = now.astimezone(ZoneInfo("Asia/Shanghai")).date()
+    tomorrow = datetime.combine(today + timedelta(days=1), datetime_time(), ZoneInfo("Asia/Shanghai"))
+    if due:
+        query = query.where(m.Todo.completed.is_(False))
+        if due == "today":
+            query = query.where(
+                m.Todo.due_at >= datetime.combine(today, datetime_time(), ZoneInfo("Asia/Shanghai")),
+                m.Todo.due_at < tomorrow,
+            )
+        elif due == "upcoming":
+            query = query.where(m.Todo.due_at >= now, m.Todo.due_at < now + timedelta(days=7))
+        else:
+            query = query.where(m.Todo.due_at < now)
+    # Pending and future deadlines first; completed/overdue records remain available.
+    order = [
+        m.Todo.completed,
+        or_(m.Todo.due_at.is_(None), m.Todo.due_at < now),
+        m.Todo.due_at.asc().nullslast(),
+        m.Todo.created_at.desc(),
+        m.Todo.id,
+    ]
+    return page_result(db, query, page, page_size, lambda row: todo_data(db, row), order=order)
 
 
 @router.post("/todos", status_code=201)
@@ -327,6 +375,12 @@ def delete_course(id: uuid.UUID, user=Depends(current_user), db=Depends(get_db))
     ):
         retire_course_document(db, doc)
         doc.course_id = None
+    db.execute(
+        delete(m.Notification).where(
+            m.Notification.study_job_id.in_(select(m.StudyJob.id).where(m.StudyJob.course_id == id))
+        )
+    )
+    db.execute(delete(m.StudyJob).where(m.StudyJob.course_id == id))
     db.execute(delete(m.StudyRun).where(m.StudyRun.course_id == id))
     db.execute(delete(m.MaterialSearch).where(m.MaterialSearch.course_id == id))
     db.execute(delete(m.MaterialOrganization).where(m.MaterialOrganization.course_id == id))
@@ -615,12 +669,75 @@ def study_data(db, row, user):
     changed = len(citations) != len(row.citations)
     return {
         **dump(row, "kind", "question", "model_mode", "answer_kind"),
+        "course_id": str(row.course_id),
         "web_sources": row.web_sources,
         "content": "引用资料已删除，请重新生成。" if changed else row.content,
         "citations": [] if changed else citations,
         "exercises": [] if changed else row.exercises,
+        "grading": {} if changed else row.grading,
         "answerable": row.answerable and not changed,
     }
+
+
+@router.post("/courses/{id}/study/{run_id}/submit")
+async def submit_practice(
+    id: uuid.UUID,
+    run_id: uuid.UUID,
+    body: PracticeSubmission,
+    request: Request,
+    user=Depends(current_user),
+    db=Depends(get_db),
+):
+    return await execute_practice(id, run_id, body, request, user, db)
+
+
+async def execute_practice(id, run_id, body, request, user, db, background=None):
+    owned(db, m.Course, id, user)
+    row = owned(db, m.StudyRun, run_id, user)
+    if row.course_id != id:
+        raise AppError("NOT_FOUND", "资源不存在", 404)
+    data = study_data(db, row, user)
+    if row.kind != "practice" or not data["exercises"] or not data["answerable"]:
+        raise AppError("PRACTICE_UNAVAILABLE", "练习不可用或引用资料已删除，请重新生成", 409)
+    if len(body.answers) != len(row.exercises):
+        raise AppError("INCOMPLETE_ANSWERS", "请完成每一道题后再提交")
+    exercises = row.exercises
+    model, started, status = provider(), time.monotonic(), "failed"
+    # Release the read transaction while waiting for the model, then recheck ownership and citations.
+    db.rollback()
+    try:
+        grade = PracticeGrade.model_validate(await model.grade_practice(exercises, body.answers))
+        if [item.number for item in grade.results] != list(range(1, len(exercises) + 1)):
+            raise AppError("MODEL_OUTPUT", "评分结果题号或数量不完整，请重试", 502)
+        for exercise, item in zip(exercises, grade.results, strict=True):
+            if exercise.get("kind", "short_answer") == "true_false":
+                if item.correct is None or item.score != (10 if item.correct else 0):
+                    raise AppError("MODEL_OUTPUT", "判断题评分结果无效，请重试", 502)
+            elif item.correct is not None:
+                raise AppError("MODEL_OUTPUT", "简答题评分结果无效，请重试", 502)
+        owned(db, m.Course, id, user, lock=True)
+        row = owned(db, m.StudyRun, run_id, user, lock=True)
+        if not study_data(db, row, user)["exercises"]:
+            raise AppError("MATERIAL_CHANGED", "引用资料已删除，请重新生成练习", 409)
+        row.grading = {
+            **grade.model_dump(),
+            "answers": body.answers,
+            "total_score": sum(item.score for item in grade.results),
+            "max_score": 10 * len(exercises),
+            "model_mode": settings().model_mode,
+            "scoring_version": 2,
+        }
+        if background:
+            from app.study_jobs import finish_job
+
+            finish_job(db, background, row.id)
+        db.commit()
+        status = "complete"
+        return study_data(db, row, user)
+    finally:
+        await asyncio.to_thread(
+            record, request.state.request_id, user.id, "practice_grade", model, started, status
+        )
 
 
 @router.get("/courses/{id}/study")
@@ -649,6 +766,10 @@ def study_history(
 async def study(
     id: uuid.UUID, body: StudyInput, request: Request, user=Depends(current_user), db=Depends(get_db)
 ):
+    return await execute_study(id, body, request, user, db)
+
+
+async def execute_study(id, body, request, user, db, background=None):
     owned(db, m.Course, id, user)
     if body.kind == "question" and not body.content.strip():
         raise AppError("EMPTY_MESSAGE", "请填写问题")
@@ -670,9 +791,7 @@ async def study(
                     {
                         "role": "assistant",
                         "content": (
-                            "联网参考回答，未来自课程知识库："
-                            if previous.answer_kind == "web"
-                            else "课程资料回答："
+                            "联网搜索参考回答：" if previous.answer_kind == "web" else "课程资料回答："
                         )
                         + previous.content,
                     },
@@ -724,8 +843,14 @@ async def study(
             raise AppError("INVALID_CITATIONS", "生成结果引用无效，请重试", 502)
         if body.kind != "practice" and result.exercises:
             raise AppError("MODEL_OUTPUT", "生成结果格式不符合任务要求", 502)
-        if body.kind == "practice" and result.answerable and not result.exercises:
-            raise AppError("MODEL_OUTPUT", "模型未返回练习题，请重试", 502)
+        if body.kind == "practice" and result.answerable and len(result.exercises) != 10:
+            raise AppError("MODEL_OUTPUT", "模型未返回完整的10道练习题，请重试", 502)
+        if (
+            body.kind == "practice"
+            and result.answerable
+            and sum(exercise.kind == "true_false" for exercise in result.exercises) != 5
+        ):
+            raise AppError("MODEL_OUTPUT", "练习题必须包含5道判断题和5道简答题，请重试", 502)
         citations = [numbers[number] for number in sorted(all_numbers)] if result.answerable else []
         answer_kind, web_sources = "knowledge", []
         if body.kind == "question" and (
@@ -773,6 +898,11 @@ async def study(
             web_sources=web_sources,
         )
         db.add(row)
+        db.flush()
+        if background:
+            from app.study_jobs import finish_job
+
+            finish_job(db, background, row.id)
         db.commit()
         status = "complete"
         return study_data(db, row, user)

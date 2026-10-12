@@ -40,7 +40,10 @@ def test_course_delete_retires_documents_jobs_history_and_preserves_other_course
     cid, keep = course(student), course(student, "保留课程")
     uploaded = upload(student, cid)["document_id"]
     kept = upload(student, keep)["document_id"]
-    assert student.post(API + f"/courses/{cid}/study", json={"kind": "outline", "content": "事务"}).status_code == 201
+    assert (
+        student.post(API + f"/courses/{cid}/study", json={"kind": "outline", "content": "事务"}).status_code
+        == 201
+    )
     batch = student.post(API + f"/courses/{cid}/material-search", json={"limit": 2}).json()
     asyncio.run(process_search(batch["id"]))
     with session() as db:

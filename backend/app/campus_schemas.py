@@ -98,10 +98,60 @@ class StudyInput(BaseModel):
 
 class Exercise(BaseModel):
     model_config = ConfigDict(extra="forbid")
+    kind: Literal["true_false", "short_answer"] = "short_answer"
     question: str = Field(min_length=1, max_length=1000)
     answer: str = Field(min_length=1, max_length=2000)
     explanation: str = Field(min_length=1, max_length=2000)
     sources: list[int] = Field(min_length=1, max_length=5)
+
+    @field_validator("answer")
+    @classmethod
+    def judgment_answer(cls, value, info):
+        if info.data.get("kind") == "true_false" and value not in {"正确", "错误"}:
+            raise ValueError("判断题参考答案必须为正确或错误")
+        return value
+
+
+class PracticeSubmission(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    answers: list[str] = Field(min_length=1, max_length=10)
+
+    @field_validator("answers")
+    @classmethod
+    def completed(cls, values):
+        if any(not value.strip() or len(value) > 4000 for value in values):
+            raise ValueError("请填写每道题的答案，每题最多4000字")
+        return [value.strip() for value in values]
+
+
+class ExerciseGrade(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    number: int = Field(ge=1, le=10)
+    score: int = Field(ge=0, le=10)
+    correct: bool | None = None
+    feedback: str = Field(min_length=1, max_length=2000)
+    knowledge_points: list[str] = Field(min_length=1, max_length=20)
+    criteria: list[dict] = Field(default_factory=list, max_length=5)
+
+    @field_validator("knowledge_points")
+    @classmethod
+    def valid_points(cls, values):
+        if any(not value.strip() or len(value) > 120 for value in values):
+            raise ValueError("知识点不能为空且最多120字")
+        return values
+
+
+class PracticeGrade(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    results: list[ExerciseGrade] = Field(min_length=1, max_length=10)
+    suggestions: list[str] = Field(min_length=1, max_length=10)
+
+    @field_validator("suggestions")
+    @classmethod
+    def valid_suggestions(cls, values):
+        if any(not value.strip() or len(value) > 1000 for value in values):
+            raise ValueError("复习建议不能为空且最多1000字")
+        return values
 
 
 class StudyOutput(BaseModel):
@@ -110,7 +160,7 @@ class StudyOutput(BaseModel):
     answerable: bool
     evidence_sufficient: bool | None = None
     sources: list[int] = Field(default_factory=list, max_length=20)
-    exercises: list[Exercise] = Field(default_factory=list, max_length=5)
+    exercises: list[Exercise] = Field(default_factory=list, max_length=10)
 
 
 class WebSource(BaseModel):

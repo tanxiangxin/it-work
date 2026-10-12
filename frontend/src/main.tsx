@@ -6,10 +6,13 @@ import { App as AntApp, Alert, Avatar, Badge, Button, Card, ConfigProvider, Draw
 import zhCN from 'antd/locale/zh_CN';
 import { BookOutlined, CommentOutlined, FileTextOutlined, LogoutOutlined, PlusOutlined, SendOutlined,
   UploadOutlined, SafetyCertificateOutlined, ArrowRightOutlined, CustomerServiceOutlined, CheckCircleOutlined,
-  ClockCircleOutlined, LinkOutlined, StopOutlined, UserOutlined, SettingOutlined, BellOutlined, CalendarOutlined, ReadOutlined } from '@ant-design/icons';
+  ClockCircleOutlined, LinkOutlined, StopOutlined, UserOutlined, SettingOutlined, BellOutlined, CalendarOutlined, ReadOutlined,
+  DeleteOutlined, HistoryOutlined } from '@ant-design/icons';
 import { api, post, streamAnswer, date, statusText, ApiError } from './api';
 import './style.css';
 import { Notices, Study, Todos } from './campus';
+import { AIConfiguration } from './AIConfiguration';
+import { DraftAccount } from './drafts';
 
 const { Title, Text, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -206,13 +209,27 @@ function Chat({ user, mode }: { user: User; mode: string }) {
   const [selected, setSelected] = useState<string>(); const [page, setPage] = useState(1); const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false); const [progress, setProgress] = useState(''); const [draft, setDraft] = useState<any>();
   const [draftBusy, setDraftBusy] = useState(false); const [ticketId, setTicketId] = useState<string>();
+  const [historyOpen, setHistoryOpen] = useState(false); const [historyPage, setHistoryPage] = useState(1);
+  const [clearing, setClearing] = useState(false);
   const [draftForm] = Form.useForm(); const controller = useRef<AbortController | null>(null); const submitKey = useRef('');
   const list = useQuery({ queryKey: ['conversations', page], queryFn: () => api('/conversations?page=' + page) });
+  const history = useQuery({ queryKey: ['conversations', 'history', historyPage],
+    queryFn: () => api(`/conversations?history=true&page=${historyPage}`), enabled: historyOpen });
   const chat = useQuery({ queryKey: ['conversation', selected], queryFn: () => api('/conversations/' + selected), enabled: !!selected });
   useEffect(() => () => controller.current?.abort(), []);
+  const clear = async (allHistory: boolean) => {
+    setClearing(true);
+    try {
+      await api('/conversations' + (allHistory ? '?history=true' : ''), { method: 'DELETE' });
+      setSelected(undefined); setInput(''); setDraft(undefined); setPage(1); setHistoryPage(1);
+      client.removeQueries({ queryKey: ['conversation'] });
+      await client.invalidateQueries({ queryKey: ['conversations'] });
+      message.success(allHistory ? '历史记录已清空' : '最近会话已清空，可在历史记录中查看');
+    } catch (e) { message.error((e as Error).message); } finally { setClearing(false); }
+  };
   const create = async () => { const c = await api('/conversations', { method: 'POST' }); setSelected(c.id); client.invalidateQueries({ queryKey: ['conversations'] }); return c.id; };
   const send = async (question = input) => {
-    if (!question.trim() || busy) return;
+    if (!question.trim() || busy || clearing) return;
     setBusy(true); setProgress('正在准备回答…'); setInput(''); controller.current = new AbortController();
     try {
       const id = selected || await create();
@@ -231,10 +248,19 @@ function Chat({ user, mode }: { user: User; mode: string }) {
   };
   return <><div className="page-heading"><div className="eyebrow">ASK & RESOLVE</div><Title level={2}>知识问答</Title>
     <Paragraph type="secondary">可以直接聊天或询问通用知识。校园 IT 问题会查阅资料并展示引用，未解决时可创建工单。</Paragraph></div>
-    <div className="chat-layout"><aside className="conversation-panel"><Button block icon={<PlusOutlined />} disabled={busy}
-      onClick={() => create().catch(e => message.error(e.message))}>新的问题</Button><div className="section-label">最近会话</div>
-      <ErrorNote error={list.error} /><List dataSource={list.data?.items || []} renderItem={(c: any) => <button className={'conversation-item ' + (selected === c.id ? 'active' : '')}
-        disabled={busy} onClick={() => setSelected(c.id)}><CommentOutlined /><span>{c.title}</span>{c.mode === 'ticketed' && <Tag>工单</Tag>}</button>} />
+    <div className="chat-layout"><aside className="conversation-panel"><Button block icon={<PlusOutlined />} disabled={busy || clearing}
+      onClick={() => create().catch(e => message.error(e.message))}>新的问题</Button>
+      <div className="conversation-toolbar"><span className="section-label">最近会话</span>
+        <Popconfirm title="清空最近会话？" description="问答仍会保留在历史记录中。" okText="清空" cancelText="取消"
+          onConfirm={() => clear(false)} disabled={busy || clearing || draftBusy || !list.data?.total}>
+          <Button size="small" type="text" icon={<DeleteOutlined />} disabled={busy || clearing || draftBusy || !list.data?.total}
+            loading={clearing} aria-label="清空最近会话">清空</Button>
+        </Popconfirm></div>
+      <Button block icon={<HistoryOutlined />} className="conversation-history-button" disabled={busy || clearing}
+        onClick={() => { setHistoryPage(1); setHistoryOpen(true); }}>历史记录</Button>
+      <ErrorNote error={list.error} /><List loading={list.isFetching} locale={{ emptyText: '暂无最近会话' }}
+        dataSource={list.data?.items || []} renderItem={(c: any) => <button className={'conversation-item ' + (selected === c.id ? 'active' : '')}
+        disabled={busy || clearing} onClick={() => setSelected(c.id)}><CommentOutlined /><span>{c.title}</span>{c.mode === 'ticketed' && <Tag>工单</Tag>}</button>} />
       {(list.data?.total || 0) > 20 && <Pagination simple current={page} total={list.data.total} pageSize={20} onChange={setPage} />}
     </aside><section className="chat-main"><ErrorNote error={chat.error} />
       <div className="chat-messages">{!chat.data?.messages.length && !busy ? <div className="chat-welcome"><div className="assistant-logo"><CustomerServiceOutlined /></div>
@@ -262,9 +288,25 @@ function Chat({ user, mode }: { user: User; mode: string }) {
             if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); void send(); }
           }} /><div className="compose-toolbar"><Text type="secondary">{mode === 'mock' ? '模拟模式用于验证流程，不代表真实 AI 效果。' : '普通回复不代表学校政策；知识库回答请核对引用。'}</Text>
           <Space><Button disabled={!chat.data?.messages.length || busy} loading={draftBusy} onClick={prepare}>未解决？创建工单</Button>
-            <Button aria-label="发送" type="primary" icon={<SendOutlined />} disabled={!input.trim()} loading={busy} onClick={() => send()}>发送</Button></Space></div>
+            <Button aria-label="发送" type="primary" icon={<SendOutlined />} disabled={!input.trim() || clearing} loading={busy} onClick={() => send()}>发送</Button></Space></div>
       </div>}
     </section></div>
+    <Drawer title="问答历史记录" width={560} open={historyOpen} onClose={() => setHistoryOpen(false)}
+      extra={<Popconfirm title="清空全部历史记录？" description="全部问答将从历史记录和最近会话中移除，无法恢复。已创建的工单会保留。"
+        okText="清空" cancelText="取消" onConfirm={() => clear(true)} disabled={busy || clearing || draftBusy || !history.data?.total}>
+        <Button danger icon={<DeleteOutlined />} loading={clearing} disabled={busy || clearing || draftBusy || !history.data?.total}>清空历史记录</Button>
+      </Popconfirm>}>
+      <Paragraph type="secondary">包括已从最近会话清空的问答，点击会话即可查看完整内容。</Paragraph>
+      <ErrorNote error={history.error} />
+      <List loading={history.isFetching} dataSource={history.data?.items || []} locale={{ emptyText: '暂无历史记录' }}
+        renderItem={(c: any) => <List.Item><button className="conversation-item conversation-history-item" disabled={busy || clearing}
+          onClick={() => { setSelected(c.id); setHistoryOpen(false); }}>
+          <CommentOutlined /><div><b>{c.title}</b><Text type="secondary">{date(c.created_at)}</Text></div>
+          {c.mode === 'ticketed' && <Tag>工单</Tag>}
+        </button></List.Item>} />
+      {(history.data?.total || 0) > 20 && <Pagination current={historyPage} total={history.data.total} pageSize={20}
+        showSizeChanger={false} onChange={setHistoryPage} />}
+    </Drawer>
     <Modal title="确认工单内容" open={!!draft} onCancel={() => setDraft(undefined)} confirmLoading={draftBusy} okText="确认提交工单"
       onOk={() => draftForm.submit()}><Paragraph type="secondary">检查并补充信息后提交，管理员会在工单中回复。</Paragraph>
       <Form form={draftForm} layout="vertical" onFinish={async values => { setDraftBusy(true);
@@ -279,7 +321,7 @@ function Chat({ user, mode }: { user: User; mode: string }) {
   </>;
 }
 
-type SystemMessage = { id: string; sequence: number; ticket_id: string | null; announcement_id: string | null; todo_id: string | null; title: string; content: string; created_at: string; read_at: string | null };
+type SystemMessage = { id: string; sequence: number; ticket_id: string | null; announcement_id: string | null; todo_id: string | null; study_job_id?: string | null; title: string; content: string; created_at: string; read_at: string | null };
 function MessageCenter({ user, onNavigate }: { user: User; onNavigate: (view: string, id: string) => void }) {
   const client = useQueryClient();
   const { notification, message } = AntApp.useApp();
@@ -300,6 +342,7 @@ function MessageCenter({ user, onNavigate }: { user: User; onNavigate: (view: st
       if (item.ticket_id) setTicketId(item.ticket_id);
       else if (item.announcement_id) onNavigate('notices', item.announcement_id);
       else if (item.todo_id) onNavigate('todos', item.todo_id);
+      else if (item.study_job_id) onNavigate('study', item.study_job_id);
       notification.destroy(item.id);
       const summary = await api('/notifications/updates'); setUnread(summary.unread_count);
     } catch (e) { message.error((e as Error).message); }
@@ -319,7 +362,7 @@ function MessageCenter({ user, onNavigate }: { user: User; onNavigate: (view: st
         const pending = centerOpen.current ? [] : data.items.filter(item => !item.read_at);
         for (const item of pending.slice(0, 3)) notification.info({
           key: item.id, message: item.title, description: item.content, duration: 8,
-          actions: <Button type="primary" size="small" onClick={() => void viewMessage(item)}>{item.ticket_id ? '查看工单' : item.todo_id ? '查看待办' : '查看通知'}</Button>,
+          actions: <Button type="primary" size="small" onClick={() => void viewMessage(item)}>{item.ticket_id ? '查看工单' : item.todo_id ? '查看待办' : item.study_job_id ? '查看学习任务' : '查看通知'}</Button>,
         });
         if (pending.length > 3) notification.info({ key: 'more-messages', message: '收到多条新消息',
           description: `还有 ${pending.length - 3} 条新消息，请在消息中心查看。`, duration: 8,
@@ -346,7 +389,7 @@ function MessageCenter({ user, onNavigate }: { user: User; onNavigate: (view: st
         renderItem={(item: SystemMessage) => <List.Item className={'system-message ' + (!item.read_at ? 'unread' : '')}>
           <div><Space><b>{item.title}</b>{!item.read_at && <Tag color="cyan">未读</Tag>}</Space>
             <Paragraph>{item.content}</Paragraph><Text type="secondary">{date(item.created_at)}</Text>
-            <Button type="link" onClick={() => void viewMessage(item)}>{item.ticket_id ? '查看工单' : item.todo_id ? '查看待办' : '查看通知'}</Button></div>
+            <Button type="link" onClick={() => void viewMessage(item)}>{item.ticket_id ? '查看工单' : item.todo_id ? '查看待办' : item.study_job_id ? '查看学习任务' : '查看通知'}</Button></div>
         </List.Item>} />
       <Pagination current={page} pageSize={20} showSizeChanger={false} total={list.data?.total || 0} onChange={setPage} />
     </Drawer><TicketDetail id={ticketId} user={user} onClose={() => setTicketId(undefined)} />
@@ -359,14 +402,15 @@ function Workspace() {
   const [focus, setFocus] = useState<{ view: string; id: string; sequence: number }>();
   const account = useQuery<User>({ queryKey: ['me'], queryFn: () => api('/auth/me') });
   const system = useQuery({ queryKey: ['system'], queryFn: () => api('/system') });
+  const aiConfig = useQuery({ queryKey: ['ai-config', user?.id], queryFn: () => api('/ai-config'), enabled: !!user });
   useEffect(() => { if (account.data) setUser(account.data);
     else if (account.error instanceof ApiError && account.error.status === 401) setUser(undefined);
   }, [account.data, account.error]);
   if (account.isPending && !user) return <div className="loading-screen"><Spin size="large" /></div>;
   if (!user) return <>{account.error && !(account.error instanceof ApiError && account.error.status === 401) && <ErrorNote error={account.error} />}
     <Login onLogin={value => { client.clear(); setUser(value); setView('chat'); }} /></>;
-  const mode = system.data?.model_mode || 'mock';
-  return <Layout className="workspace"><Layout.Sider width={228} breakpoint="lg" collapsedWidth={0} className="sidebar">
+  const mode = aiConfig.data && aiConfig.data.mode !== 'default' ? 'real' : system.data?.model_mode || 'mock';
+  return <DraftAccount.Provider value={user.id}><Layout className="workspace"><Layout.Sider width={228} breakpoint="lg" collapsedWidth={0} className="sidebar">
     <div className="brand"><span className="brand-mark">IT</span><div>校园 IT 服务台<small>CAMPUS SUPPORT</small></div></div>
     <div className="sidebar-label">服务空间</div><Menu theme="dark" mode="inline" selectedKeys={[view]} onClick={e => { setView(e.key); setFocus(undefined); }} items={[
       { key: 'chat', icon: <CommentOutlined aria-hidden="true" />, label: '知识问答' },
@@ -377,17 +421,17 @@ function Workspace() {
       ...(user.role === 'admin' ? [{ key: 'knowledge', icon: <BookOutlined aria-hidden="true" />, label: '知识库管理' }] : [])]} />
     <div className="sidebar-note"><CheckCircleOutlined /><b>每一步都有记录</b><p>答案可核对<br />问题可跟进</p></div>
   </Layout.Sider><Layout><Layout.Header className="topbar"><span>校园服务 / {({ chat: '知识问答', knowledge: '知识库管理', notices: '校园通知', todos: '个人待办', study: '学习资料助手', tickets: '工单' } as Record<string, string>)[view]}</span>
-    <Space><MessageCenter key={user.id} user={user} onNavigate={(next, id) => { setView(next); setFocus({ view: next, id, sequence: Date.now() }); }} /><Tag color={mode === 'mock' ? 'gold' : 'cyan'}>{mode === 'mock' ? '模拟模式' : '真实模型'}</Tag><Avatar size="small">{user.name[0]}</Avatar>
+    <Space><MessageCenter key={user.id} user={user} onNavigate={(next, id) => { setView(next); setFocus({ view: next, id, sequence: Date.now() }); }} /><AIConfiguration key={user.id} onSaved={() => { void client.invalidateQueries({ queryKey: ['ai-config'] }); }} /><Avatar size="small">{user.name[0]}</Avatar>
       <Text>{user.name}</Text><Tag>{user.role === 'admin' ? '管理员' : '学生'}</Tag><Button type="text" aria-label="退出登录" icon={<LogoutOutlined />} onClick={async () => {
         try { await api('/auth/logout', { method: 'POST' }); setUser(undefined); client.clear(); } catch (e) { message.error((e as Error).message); }
       }} /></Space></Layout.Header><Layout.Content className="content">
       {view === 'chat' && <Chat key={user.id} user={user} mode={mode} />}{view === 'tickets' && <Tickets user={user} />}
       {view === 'notices' && <Notices key={focus?.view === view ? focus.sequence : view} user={user} focusId={focus?.view === view ? focus.id : undefined} />}
       {view === 'todos' && <Todos key={focus?.view === view ? focus.sequence : view} focusId={focus?.view === view ? focus.id : undefined} />}
-      {view === 'study' && <Study Source={SourceButton} />}
+      {view === 'study' && <Study key={focus?.view === view ? focus.sequence : user.id} Source={SourceButton} focusId={focus?.view === view ? focus.id : undefined} />}
       {view === 'knowledge' && user.role === 'admin' && <Knowledge />}
       <footer>校园 IT 服务台 · {mode === 'mock' ? '模拟原型' : '知识库服务'} · 服务时间显示为北京时间</footer>
-    </Layout.Content></Layout></Layout>;
+    </Layout.Content></Layout></Layout></DraftAccount.Provider>;
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><QueryClientProvider client={queryClient}>

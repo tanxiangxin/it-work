@@ -214,6 +214,7 @@ def test_study_outline_practice_history_and_delete(clients):
         assert run["answerable"] and run["model_mode"] == "mock"
         assert bool(run["exercises"]) == (kind == "practice")
         if kind == "practice":
+            assert len(run["exercises"]) == 10
             assert run["exercises"][0]["sources"][0] == run["citations"][0]["number"]
     other_course = course(student, "其他课程")
     assert not student.post(API + f"/courses/{other_course}/study", json={"kind": "outline"}).json()[

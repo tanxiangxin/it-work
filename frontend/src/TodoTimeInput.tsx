@@ -70,7 +70,7 @@ function TimeWheel({ value, count, label, active, onChange }: { value: number; c
   </div>;
 }
 
-export function TodoTimeInput({ value, onChange, label, disabled }: { value?: string; onChange?: (value?: string) => void; label: string; disabled?: boolean }) {
+export function TodoTimeInput({ value, onChange, label, disabled, context = 'todo' }: { value?: string; onChange?: (value?: string) => void; label: string; disabled?: boolean; context?: 'todo' | 'notice' }) {
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState<string>();
   const [error, setError] = useState<string>();
@@ -91,7 +91,7 @@ export function TodoTimeInput({ value, onChange, label, disabled }: { value?: st
     <Modal title={`选择${label}（北京时间）`} open={open} afterOpenChange={setWheelsReady} onCancel={() => setOpen(false)} okText="确认时间" cancelText="取消选择" width={480} style={{ top: 24 }} destroyOnHidden onOk={() => {
       try { onChange?.(normalizeTodoTime(draft)); setOpen(false); } catch (e) { setError((e as Error).message); }
     }}>
-      <Typography.Paragraph type="secondary">选择日期和时分，确认后返回待办编辑；保存待办后才会生效。</Typography.Paragraph>
+      <Typography.Paragraph type="secondary">{context === 'notice' ? '选择日期和时分，确认后返回通知编辑；保存草稿后才会生效。' : '选择日期和时分，确认后返回待办编辑；保存待办后才会生效。'}</Typography.Paragraph>
       <Calendar locale={calendarLocale} fullscreen={false} value={panel} headerRender={({ value: month, onChange: changeMonth }) =>
         <div className="todo-calendar-header">
           <Button type="text" icon={<LeftOutlined />} aria-label="上个月" onClick={() => changeMonth(month.subtract(1, 'month'))} />

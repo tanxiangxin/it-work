@@ -23,7 +23,8 @@ def client(role):
 student, admin = client('student'), client('admin')
 def get(opener, path): return json.load(opener.open(BASE+path,timeout=5))
 tickets=get(student,'/tickets')['items']
-ticket=next(t for t in tickets if t['title']=='E2E VPN 809 服务请求')
+expected_title = os.environ.get('E2E_WORKFLOW_TITLE')
+ticket=next(t for t in tickets if t['title']==expected_title or not expected_title and t['title'].startswith('E2E VPN 809 服务请求'))
 assert ticket['status']=='closed'
 assert get(student,'/tickets/'+ticket['id'])['replies']
 doc=next(d for d in get(admin,'/documents')['items'] if d['name']=='e2e-vpn.md')

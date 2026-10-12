@@ -18,7 +18,7 @@ from app.storage import storage
 logger = logging.getLogger(__name__)
 celery = Celery("campus", broker=settings().redis_url)
 celery.conf.update(
-    imports=("app.course_materials",),
+    imports=("app.course_materials", "app.study_jobs"),
     task_acks_late=True,
     task_reject_on_worker_lost=True,
     worker_prefetch_multiplier=1,
@@ -220,8 +220,10 @@ def import_document(job_id):
 @celery.task(name="app.jobs.recover")
 def recover():
     from app.course_materials import recover_searches
+    from app.study_jobs import recover_study_jobs
 
     recover_searches()
+    recover_study_jobs()
     pending = []
     with session() as db:
         cutoff = now() - timedelta(seconds=settings().job_timeout_seconds)

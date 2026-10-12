@@ -18,6 +18,8 @@ from sqlalchemy.exc import IntegrityError
 from starlette.exceptions import HTTPException
 
 from app import models as m
+from app.ai_configuration import router as ai_configuration_router
+from app.ai_configuration import user_chat_provider
 from app.config import settings
 from app.conversation import forced_route
 from app.db import get_db, session
@@ -47,6 +49,7 @@ async def lifespan(app):
 
 
 app = FastAPI(title="校园 IT 服务台", version="0.1.0", lifespan=lifespan)
+app.include_router(ai_configuration_router)
 API = "/api/v1"
 
 
@@ -105,13 +108,18 @@ def user_data(user):
     return dump(user, "email", "name", "role")
 
 
-def page_result(db, query, page, size, render):
+def page_result(db, query, page, size, render, order=None):
     total = db.scalar(select(func.count()).select_from(query.subquery()))
     rows = db.scalars(
         query.order_by(None)
         .order_by(
-            query.column_descriptions[0]["entity"].created_at.desc(),
-            query.column_descriptions[0]["entity"].id,
+            *(
+                order
+                or (
+                    query.column_descriptions[0]["entity"].created_at.desc(),
+                    query.column_descriptions[0]["entity"].id,
+                )
+            )
         )
         .offset((page - 1) * size)
         .limit(size)
@@ -146,7 +154,9 @@ def document_detail(db, doc):
 
 
 def conversation_owned(db, id, user, lock=False):
-    q = select(m.Conversation).where(m.Conversation.id == id, m.Conversation.user_id == user.id)
+    q = select(m.Conversation).where(
+        m.Conversation.id == id, m.Conversation.user_id == user.id, m.Conversation.history_hidden.is_(False)
+    )
     conversation = db.scalar(q.with_for_update() if lock else q)
     if not conversation:
         raise AppError("NOT_FOUND", "会话不存在", 404)
@@ -512,14 +522,51 @@ def new_conversation(user=Depends(current_user), db=Depends(get_db)):
 
 
 @app.get(API + "/conversations")
-def conversations(page: Page = 1, page_size: Size = 20, user=Depends(current_user), db=Depends(get_db)):
+def conversations(
+    page: Page = 1,
+    page_size: Size = 20,
+    history: bool = False,
+    user=Depends(current_user),
+    db=Depends(get_db),
+):
+    query = select(m.Conversation).where(
+        m.Conversation.user_id == user.id, m.Conversation.history_hidden.is_(False)
+    )
+    if not history:
+        query = query.where(m.Conversation.recent_hidden.is_(False))
     return page_result(
         db,
-        select(m.Conversation).where(m.Conversation.user_id == user.id),
+        query,
         page,
         page_size,
         lambda c: dump(c, "title", "mode"),
     )
+
+
+@app.delete(API + "/conversations")
+def clear_conversations(history: bool = False, user=Depends(current_user), db=Depends(get_db)):
+    query = select(m.Conversation).where(
+        m.Conversation.user_id == user.id, m.Conversation.history_hidden.is_(False)
+    )
+    if not history:
+        query = query.where(m.Conversation.recent_hidden.is_(False))
+    conversations = list(db.scalars(query.order_by(m.Conversation.id).with_for_update()))
+    ids = [c.id for c in conversations]
+    if (
+        history
+        and ids
+        and db.scalar(
+            select(m.Message.id).where(m.Message.conversation_id.in_(ids), m.Message.status == "pending")
+        )
+    ):
+        raise AppError("ANSWER_PENDING", "有回答正在生成，请稍后再清空历史记录", 409)
+    for conversation in conversations:
+        conversation.recent_hidden = True
+        if history:
+            # Keep references from submitted tickets intact while removing access to chat history.
+            conversation.history_hidden = True
+    db.commit()
+    return {"cleared": len(conversations)}
 
 
 def document_access(doc, user):
@@ -572,13 +619,15 @@ def send_message(
     if db.scalar(select(m.Message.id).where(m.Message.conversation_id == id, m.Message.status == "pending")):
         raise AppError("BUSY", "上一条问题正在处理", 409)
     c.title = body.content[:60]
+    model = user_chat_provider(db, user.id, provider)
+    chat_cfg = getattr(model, "chat_config", None) or settings()
     question_message = m.Message(
-        conversation_id=id, role="user", content=body.content, model_mode=settings().model_mode
+        conversation_id=id, role="user", content=body.content, model_mode=chat_cfg.model_mode
     )
     db.add(question_message)
     db.flush()
     answer = m.Message(
-        conversation_id=id, role="assistant", content="", status="pending", model_mode=settings().model_mode
+        conversation_id=id, role="assistant", content="", status="pending", model_mode=chat_cfg.model_mode
     )
     db.add(answer)
     db.commit()
@@ -587,7 +636,6 @@ def send_message(
 
     async def generate():
         started = time.monotonic()
-        model = provider()
         trace_status = "failed"
 
         def context(vector=None):
@@ -640,8 +688,8 @@ def send_message(
                     m.RequestTrace(
                         request_id=request_id,
                         user_id=user_id,
-                        model_mode=settings().model_mode,
-                        model="mock" if settings().model_mode == "mock" else settings().llm_model,
+                        model_mode=chat_cfg.model_mode,
+                        model="mock" if chat_cfg.model_mode == "mock" else chat_cfg.llm_model,
                         duration_ms=int((time.monotonic() - started) * 1000),
                         calls=model.calls,
                         usage=model.usage,
@@ -657,7 +705,8 @@ def send_message(
             sources = []
             if answer_kind == "knowledge":
                 yield sse("status", {"phase": "retrieving", "message": "正在查找校园 IT 资料"})
-                vector = (await model.embed([body.content]))[0]
+                embedding_model = provider() if getattr(model, "chat_config", None) else model
+                vector = (await embedding_model.embed([body.content]))[0]
                 sources, history = await asyncio.to_thread(context, vector)
             yield sse(
                 "status",
@@ -704,7 +753,7 @@ def send_message(
                     "content": text,
                     "citations": citations,
                     "answerable": bool(valid),
-                    "model_mode": settings().model_mode,
+                    "model_mode": chat_cfg.model_mode,
                     "answer_kind": answer_kind,
                 },
             )
@@ -742,9 +791,9 @@ async def draft_ticket(id: uuid.UUID, request: Request, user=Depends(current_use
     history = get_conversation(id, user, db)["messages"]
     if not any(message["role"] == "user" for message in history):
         raise AppError("EMPTY_CONVERSATION", "请先描述问题")
-    # Release the read transaction while the provider is running.
+    model, started, trace_status = user_chat_provider(db, user.id, provider), time.monotonic(), "failed"
+    # Resolve the account configuration before releasing the read transaction.
     db.commit()
-    model, started, trace_status = provider(), time.monotonic(), "failed"
     try:
         summary = await model.draft([{"role": x["role"], "content": x["content"]} for x in history[-8:]])
         trace_status = "complete"
@@ -926,7 +975,16 @@ def change_status(id: uuid.UUID, body: StatusInput, user=Depends(current_user), 
 
 def notification_data(item):
     return dump(
-        item, "sequence", "ticket_id", "announcement_id", "todo_id", "kind", "title", "content", "read_at"
+        item,
+        "sequence",
+        "ticket_id",
+        "announcement_id",
+        "todo_id",
+        "study_job_id",
+        "kind",
+        "title",
+        "content",
+        "read_at",
     )
 
 
@@ -999,8 +1057,10 @@ def read_notification(id: uuid.UUID, user=Depends(current_user), db=Depends(get_
 
 def register_campus_routes():
     from app.campus import router
+    from app.study_jobs import router as study_router
 
     app.include_router(router)
+    app.include_router(study_router)
 
 
 register_campus_routes()

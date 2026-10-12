@@ -63,6 +63,7 @@ def clients(database, tmp_path, monkeypatch):
     monkeypatch.setattr("app.campus.enqueue", lambda job_id: None)
     monkeypatch.setattr("app.campus.enqueue_search", lambda job_id: None)
     monkeypatch.setattr("app.course_materials.enqueue_search", lambda job_id: None)
+    monkeypatch.setattr("app.study_jobs.enqueue_study", lambda job_id: None)
     names = ",".join(t.name for t in m.Base.metadata.sorted_tables if t.name != "knowledge_state")
     with database.begin() as db:
         db.execute(text("TRUNCATE " + names + " CASCADE"))

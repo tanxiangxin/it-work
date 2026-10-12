@@ -43,6 +43,16 @@ class LoginSession(Record, Base):
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
 
 
+class AIConfiguration(Base):
+    __tablename__ = "ai_configurations"
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id"), primary_key=True)
+    mode: Mapped[str] = mapped_column(String(16))
+    api_base: Mapped[str] = mapped_column(String(2048))
+    model: Mapped[str] = mapped_column(String(200))
+    api_key: Mapped[str] = mapped_column(Text, default="")
+    api_style: Mapped[str] = mapped_column(String(16), default="openai")
+
+
 class KnowledgeState(Base):
     __tablename__ = "knowledge_state"
     id: Mapped[int] = mapped_column(primary_key=True, default=1)
@@ -105,6 +115,8 @@ class Conversation(Record, Base):
     user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id"), index=True)
     title: Mapped[str] = mapped_column(String(120), default="新的问题")
     mode: Mapped[str] = mapped_column(String(16), default="bot")
+    recent_hidden: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
+    history_hidden: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
 
 
 class Message(Record, Base):
@@ -180,6 +192,7 @@ class Notification(Record, Base):
     ticket_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("tickets.id"), nullable=True)
     announcement_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("announcements.id"), nullable=True)
     todo_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("todos.id"), nullable=True)
+    study_job_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("study_jobs.id"), nullable=True)
     event_id: Mapped[uuid.UUID] = mapped_column()
     kind: Mapped[str] = mapped_column(String(24))
     title: Mapped[str] = mapped_column(String(160))
@@ -244,10 +257,25 @@ class StudyRun(Record, Base):
     content: Mapped[str] = mapped_column(Text)
     citations: Mapped[list] = mapped_column(JSON, default=list)
     exercises: Mapped[list] = mapped_column(JSON, default=list)
+    grading: Mapped[dict] = mapped_column(JSON, default=dict, server_default="{}")
     answerable: Mapped[bool] = mapped_column(Boolean, default=False)
     model_mode: Mapped[str] = mapped_column(String(16))
     answer_kind: Mapped[str] = mapped_column(String(16), default="knowledge", server_default="knowledge")
     web_sources: Mapped[list] = mapped_column(JSON, default=list, server_default="[]")
+
+
+class StudyJob(Record, Base):
+    __tablename__ = "study_jobs"
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id"), index=True)
+    course_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("courses.id"), index=True)
+    kind: Mapped[str] = mapped_column(String(16))
+    payload: Mapped[dict] = mapped_column(JSON, default=dict)
+    status: Mapped[str] = mapped_column(String(16), default="queued")
+    run_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("study_runs.id"), nullable=True)
+    error: Mapped[str | None] = mapped_column(Text, nullable=True)
+    lease_token: Mapped[str | None] = mapped_column(String(36), nullable=True)
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
 
 class MaterialSearch(Record, Base):

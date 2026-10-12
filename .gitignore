@@ -8,6 +8,8 @@ dist/
 data/
 test-results/
 playwright-report/
+playwright-report-*/
+test-results-*/
 *.log
 .cache/
 work/

@@ -109,22 +109,26 @@ test('个人课程上传、真实资料问答、提纲、练习与引用', async
     await expect(student.getByRole('row').filter({ hasText: 'database-notes.md' }).getByText('已发布', { exact: true })).toBeVisible({ timeout: 60000 });
     await student.getByLabel('学习问题或主题', { exact: true }).fill('什么是数据库事务的原子性？');
     await student.getByRole('button', { name: '根据资料回答', exact: true }).click();
-    const cited = student.getByRole('button', { name: /database-notes.md/ }).first();
+    const cited = student.locator('.ant-card').getByRole('button', { name: /database-notes.md/ }).filter({ has: student.locator('.anticon-link') }).first();
     await expect(cited).toBeVisible({ timeout: 90000 });
     await cited.click(); await expect(student.getByText('查看回答依据', { exact: true })).toBeVisible();
     await expect(student.locator('.source-text').last()).toContainText('原子性');
     await student.locator('.ant-drawer-open .ant-drawer-close').click();
-    await student.getByText('复习提纲', { exact: true }).click();
+    await student.locator('[aria-label="学习任务"]').getByText('复习提纲', { exact: true }).click();
     await expect(student.getByRole('radio', { name: '复习提纲', exact: true })).toBeChecked();
     await student.getByLabel('学习问题或主题', { exact: true }).fill('');
-    const outline = student.waitForResponse(r => r.url().endsWith(`/courses/${courseId}/study`) && r.request().method() === 'POST');
+    const outline = student.waitForResponse(r => r.url().endsWith(`/courses/${courseId}/study-jobs`) && r.request().method() === 'POST');
     await student.getByRole('button', { name: '生成复习提纲', exact: true }).click();
-    const outlineResponse = await outline; expect(outlineResponse.status()).toBe(201);
-    expect((await outlineResponse.json()).answerable).toBe(true);
-    await student.getByText('练习题', { exact: true }).click();
-    await expect(student.getByRole('radio', { name: '练习题', exact: true })).toBeChecked();
+    const outlineResponse = await outline; expect(outlineResponse.status()).toBe(202);
+    const outlineJob = await outlineResponse.json();
+    await expect.poll(async () => (await (await context.request.get(`/api/v1/study-jobs/${outlineJob.id}`)).json()).status,
+      { timeout: 60000 }).toBe('complete');
+    const outlineResult = await (await context.request.get(`/api/v1/study-jobs/${outlineJob.id}`)).json();
+    expect(outlineResult.result.answerable).toBe(true);
+    await student.locator('[aria-label="学习任务"]').getByText('练习题', { exact: true }).click();
+    await expect(student.locator('[aria-label="学习任务"]').getByRole('radio', { name: '练习题', exact: true })).toBeChecked();
     await student.getByRole('button', { name: '生成练习题', exact: true }).click();
-    const reveal = student.getByRole('button', { name: '查看参考答案', exact: true }).first();
+    const reveal = student.getByRole('button', { name: '显示答案', exact: true }).first();
     await expect(reveal).toBeVisible({ timeout: 90000 }); await reveal.click();
     await expect(student.getByText(/参考答案：/).first()).toBeVisible();
     await student.reload(); await student.getByRole('menuitem', { name: '学习资料助手', exact: true }).click();
@@ -141,6 +145,9 @@ from app.storage import storage
 from app import models as m
 id=uuid.UUID('${courseId}')
 with session() as db:
+    jobs=select(m.StudyJob.id).where(m.StudyJob.course_id == id)
+    db.execute(delete(m.Notification).where(m.Notification.study_job_id.in_(jobs)))
+    db.execute(delete(m.StudyJob).where(m.StudyJob.course_id == id))
     docs=select(m.Document.id).where(m.Document.course_id == id)
     versions=select(m.DocumentVersion.id).where(m.DocumentVersion.document_id.in_(docs))
     keys=list(db.scalars(select(m.DocumentVersion.storage_key).where(m.DocumentVersion.document_id.in_(docs))))
