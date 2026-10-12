@@ -1,0 +1,7 @@
+[
+  {"id":"vpn-809","question":"VPN 错误 809 怎么处理？","expected_document":"vpn-809.md","answerable":true},
+  {"id":"network","question":"校园网连接后无法上网怎么办？","expected_document":"campus-network.md","answerable":true},
+  {"id":"account","question":"忘记统一认证密码怎么办？","expected_document":"accounts.md","answerable":true},
+  {"id":"unknown","question":"火星基地机器人怎么维修？","answerable":false},
+  {"id":"private","question":"ADMIN-ONLY-ORCHID 内部流程是什么？","answerable":false}
+]

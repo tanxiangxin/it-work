@@ -1,0 +1,14 @@
+**
+!backend/
+!backend/app/
+!backend/app/**
+!backend/migrations/
+!backend/migrations/**
+!backend/alembic.ini
+!frontend/
+!frontend/dist/
+!frontend/dist/**
+!work/
+!work/Dockerfile.*-local
+**/__pycache__/
+**/*.pyc

@@ -1,0 +1,26 @@
+[project]
+name = "campus-it-assistant"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dependencies = ["fastapi>=0.115,<1", "uvicorn>=0.34,<1", "sqlalchemy>=2.0,<2.1", "psycopg[binary]>=3.2,<4", "alembic>=1.15,<2", "pgvector>=0.4,<1", "celery[redis]>=5.5,<6", "httpx>=0.28,<1", "pydantic-settings>=2.8,<3", "python-multipart>=0.0.20,<1", "pypdf>=6,<7", "python-docx>=1.1,<2", "jieba>=0.42,<1", "rank-bm25>=0.2,<1", "argon2-cffi>=23,<26"]
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "pytest-asyncio>=0.26,<2", "ruff>=0.11,<1", "reportlab>=4,<5"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+# jieba 0.42.1 setup.py declares no runtime dependencies. Supply its static
+# metadata so cross-platform resolution need not execute this legacy sdist.
+[[tool.uv.dependency-metadata]]
+name = "jieba"
+version = "0.42.1"
+requires-dist = []
+
+[tool.ruff]
+target-version = "py312"
+line-length = 110
+
+[tool.ruff.lint]
+select = ["F", "I", "UP"]

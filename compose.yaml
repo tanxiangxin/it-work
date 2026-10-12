@@ -1,0 +1,91 @@
+name: campus-it-assistant
+x-backend: &backend
+  build: {context: ./backend, target: runtime}
+  env_file: .env
+  volumes:
+    - files:/data/files
+    - ./samples:/app/samples:ro
+  environment:
+    SAMPLES_DIR: /app/samples
+  depends_on:
+    postgres: {condition: service_healthy}
+    redis: {condition: service_healthy}
+services:
+  embedding:
+    profiles: [bge]
+    image: ghcr.io/huggingface/text-embeddings-inference:cpu-1.9
+    command: [--model-id, BAAI/bge-m3, --revision, '${EMBEDDING_REVISION:-5617a9f61b028005a4858fdac845db406aefb181}', --dtype, float32, --pooling, cls, --max-batch-tokens, '2048', --max-client-batch-size, '16', --tokenization-workers, '2']
+    volumes: [embedding_cache:/data]
+    restart: unless-stopped
+    healthcheck:
+      test: [CMD, curl, -f, http://localhost:80/health]
+      interval: 10s
+      timeout: 5s
+      start_period: 30s
+      retries: 120
+  postgres:
+    image: pgvector/pgvector:0.8.1-pg16
+    environment:
+      POSTGRES_DB: campus
+      POSTGRES_USER: campus
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+    volumes: [database:/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U campus -d campus']
+      interval: 5s
+      retries: 20
+  redis:
+    image: redis:7.2.12-alpine
+    command: [redis-server, --appendonly, 'yes']
+    volumes: [redis:/data]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      retries: 20
+  migrate:
+    <<: *backend
+    command: [alembic, upgrade, head]
+  api:
+    <<: *backend
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health/ready')"]
+      interval: 10s
+      retries: 12
+  worker:
+    <<: *backend
+    command: [celery, -A, app.jobs.celery, worker, --loglevel=INFO, --concurrency=1]
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+  scheduler:
+    <<: *backend
+    command: [celery, -A, app.jobs.celery, beat, --loglevel=INFO, --schedule=/tmp/celerybeat]
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+  web:
+    build: ./frontend
+  gateway:
+    image: nginx:1.28.0-alpine
+    ports: ['127.0.0.1:8080:80']
+    volumes: [./deploy/nginx.conf:/etc/nginx/nginx.conf:ro]
+    depends_on:
+      api: {condition: service_healthy}
+      web: {condition: service_started}
+  tests:
+    profiles: [test]
+    build: {context: ./backend, target: test}
+    env_file: .env
+    environment:
+      MODEL_MODE: mock
+      TEST_DATABASE_URL: ${DATABASE_URL}
+      TEST_REDIS_URL: redis://redis:6379/1
+      TEST_NATIVE_POSTGRES: '1'
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+volumes:
+  embedding_cache:
+  database:
+  redis:
+  files:

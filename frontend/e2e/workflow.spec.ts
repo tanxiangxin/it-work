@@ -1,0 +1,44 @@
+import {test,expect,Page} from '@playwright/test';
+async function login(page:Page,role:'student'|'admin') {
+  await page.goto('/');
+  await page.getByRole('radio',{name:role==='admin'?'管理端登录':'学生登录',exact:true}).click();
+  await page.getByLabel('账号邮箱').fill(role+'@example.test');
+  await page.getByLabel('密码',{exact:true}).fill(process.env[role==='admin'?'DEMO_ADMIN_PASSWORD':'DEMO_STUDENT_PASSWORD'] || 'test-password');
+  await page.getByRole('button',{name:role==='admin'?'登录管理端':'登录学生服务台'}).click();
+  await expect(page.getByText('校园服务 / 知识问答')).toBeVisible();
+}
+test('上传 → 引用问答 → 草稿确认 → 人工回复 → 学生关闭',async({browser})=>{
+  const a=await browser.newContext(),s=await browser.newContext();
+  const admin=await a.newPage(),student=await s.newPage();
+  await login(admin,'admin');
+  await admin.getByRole('menuitem',{name:'知识库管理'}).click();
+  await admin.locator('input[type=file]').first().setInputFiles({name:'e2e-vpn.md',mimeType:'text/markdown',buffer:Buffer.from('# VPN\n\nVPN 错误 809：检查网络连接并关闭代理后重连。')});
+  const row=admin.getByRole('row').filter({hasText:'e2e-vpn.md'}).first();
+  await expect(row.getByText('已发布',{exact:true})).toBeVisible({timeout:45000});
+  await login(student,'student');
+  await student.getByLabel('问题',{exact:true}).fill('VPN 错误809怎么办？');
+  await student.getByRole('button',{name:'发送',exact:true}).click();
+  await expect(student.getByRole('button',{name:/e2e-vpn/}).first()).toBeVisible({timeout:30000});
+  await student.getByRole('button',{name:/e2e-vpn/}).first().click();
+  await expect(student.getByText('查看回答依据',{exact:true})).toBeVisible();
+  await student.locator('.ant-drawer-open .ant-drawer-close').click();
+  await student.getByRole('button',{name:'未解决？创建工单'}).click();
+  await expect(student.getByText('确认工单内容',{exact:true})).toBeVisible();
+  await student.getByLabel('问题标题').fill('E2E VPN 809 服务请求');
+  await student.getByRole('button',{name:'确认提交工单'}).click();
+  await expect(student.getByText('E2E VPN 809 服务请求',{exact:true}).first()).toBeVisible();
+  await student.locator('.ant-drawer-open .ant-drawer-close').click();
+  await admin.getByRole('menuitem',{name:'工单工作台'}).click();
+  await admin.getByRole('button',{name:'E2E VPN 809 服务请求',exact:true}).click();
+  await admin.getByRole('button',{name:'标记为处理中',exact:true}).click();
+  await admin.getByLabel('工单回复',{exact:true}).fill('已检查 VPN 服务，请重试。');
+  await admin.getByRole('button',{name:'发送回复',exact:true}).click();
+  await admin.getByRole('button',{name:'标记为已解决',exact:true}).click();
+  await student.getByRole('menuitem',{name:'我的工单'}).click();
+  await student.getByRole('button',{name:'E2E VPN 809 服务请求',exact:true}).click();
+  await expect(student.getByText('已检查 VPN 服务，请重试。',{exact:true})).toBeVisible();
+  await student.getByRole('button',{name:'确认解决并关闭',exact:true}).click();
+  await expect(student.getByText('工单已关闭，记录已保留。',{exact:true})).toBeVisible();
+  if(process.env.E2E_SCREENSHOT_DIR) await student.screenshot({path:process.env.E2E_SCREENSHOT_DIR+'/student-ticket.png',fullPage:true});
+  await a.close();await s.close();
+});

@@ -1,0 +1,12 @@
+[
+  {"id":"hut-card-loss","question":"湖南工业大学校园卡丢了怎么挂失补卡？","answerable":true,"answer_kind":"knowledge","expected_document":"hut-campus-card.md"},
+  {"id":"hut-electricity-refund","question":"湖南工业大学宿舍电费充错房间，在哪里申请退费？","answerable":true,"answer_kind":"knowledge","expected_document":"hut-dorm-electricity.md"},
+  {"id":"hut-email","question":"湖南工业大学学生邮箱后缀是什么，在哪注册？","answerable":true,"answer_kind":"knowledge","expected_document":"hut-education-email.md"},
+  {"id":"hut-repair","question":"湖南工业大学宿舍网络故障应该打哪个电话？","answerable":true,"answer_kind":"knowledge","expected_document":"hut-it-repair-2026.md"},
+  {"id":"hut-work-study","question":"湖南工业大学2026年秋季勤工助学申请有什么条件，需要什么表格？","answerable":true,"answer_kind":"knowledge","expected_document":"hut-work-study-2026.md"},
+  {"id":"hut-student-center","question":"湖南工业大学学生事务中心在哪里，联系电话是多少？","answerable":true,"answer_kind":"knowledge","expected_document":"hut-student-affairs.md"},
+  {"id":"hut-teacher-room","question":"湖南工业大学老师申请借用公共机房需要什么手续？","answerable":true,"answer_kind":"knowledge","expected_document":"hut-computer-room.md"},
+  {"id":"hut-unknown-exam-deadline","question":"湖南工业大学2026年秋季重修考试报名具体截止到几月几日？","answerable":false,"answer_kind":"knowledge"},
+  {"id":"hut-unknown-library-hours","question":"湖南工业大学图书馆今天晚上准确几点关门？","answerable":false,"answer_kind":"knowledge"},
+  {"id":"hut-personal-grade","question":"我是湖南工业大学学生，帮我查询我自己的本学期成绩和绩点。","answerable":false,"answer_kind":"knowledge"}
+]

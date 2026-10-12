@@ -1,0 +1,62 @@
+name: Prototype verification
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '24.10.0'}
+      - uses: pnpm/action-setup@v4
+        with: {version: '10.33.0'}
+      - uses: astral-sh/setup-uv@v6
+        with: {version: '0.11.3', python-version: '3.12'}
+      - name: Configure isolated mock environment
+        run: |
+          cp .env.example .env
+          sed -i 's/replace-with-a-random-db-password/test-db-password/g;s/replace-with-a-student-password/test-password/g;s/replace-with-an-admin-password/test-password/g' .env
+      - name: Backend static checks
+        working-directory: backend
+        run: |
+          uv sync --frozen
+          uv run ruff check app tests
+          uv run ruff format --check app tests
+      - name: Frontend frozen dependencies and build
+        working-directory: frontend
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+          pnpm exec playwright install --with-deps chromium
+      - name: Container integration tests
+        run: docker compose --profile test run --build --rm tests
+      - name: Start complete prototype
+        run: |
+          docker compose up -d --build --wait
+          docker compose exec -T api python -m app.cli seed
+      - name: Browser workflow against real Worker and Redis
+        working-directory: frontend
+        env:
+          DEMO_ADMIN_PASSWORD: test-password
+          DEMO_STUDENT_PASSWORD: test-password
+        run: pnpm test:e2e
+      - name: Persistence restart verification
+        env:
+          DEMO_ADMIN_PASSWORD: test-password
+          DEMO_STUDENT_PASSWORD: test-password
+        run: |
+          docker compose restart api worker scheduler postgres redis
+          python scripts/check_persistence.py
+      - name: Service logs
+        if: always()
+        run: docker compose logs --no-color > services.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verification-artifacts
+          path: |
+            services.log
+            frontend/playwright-report/
+            frontend/test-results/
+      - name: Stop test services
+        if: always()
+        run: docker compose down

@@ -1,0 +1,1008 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-10-10T08:17:37.285502+00:00",
+  "model_mode": "real",
+  "system": {
+    "model_mode": "real",
+    "retrieval_mode": "hybrid",
+    "embedding_dimensions": 1024,
+    "chat_model": "deepseek-flash",
+    "embedding_model": "BAAI/bge-m3",
+    "index_key": "real:f667560db358954bf41e42d0:1024"
+  },
+  "results": [
+    {
+      "case": {
+        "id": "hut-card-loss",
+        "question": "湖南工业大学校园卡丢了怎么挂失补卡？",
+        "answerable": true,
+        "answer_kind": "knowledge",
+        "expected_document": "hut-campus-card.md"
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "routing",
+            "message": "正在理解你的问题"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "retrieving",
+            "message": "正在查找校园 IT 资料"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回答并校验来源"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "30f06bc9-9ff1-431c-aa67-25ead4299b44",
+            "content": "根据湖南工业大学校园卡服务中心的说明，校园卡丢失后可以先在智慧工大APP首页的“校园卡服务”中办理挂失，然后到校园卡服务中心补卡。如涉及校园卡及一卡通相关问题，也可拨打官方公布的电话22183800咨询。资料发布于2025年，APP菜单和办理要求可能更新，办理时请以最新官方通知和实际页面为准。",
+            "citations": [
+              {
+                "number": 1,
+                "chunk_id": "c04a8c9d-82ec-48b0-86e5-e82ed16d6fd8",
+                "version_id": "c6459d99-a1d0-4262-aa1d-2d9fc98d5409",
+                "document_id": "ae48d6e1-e3aa-40b4-8690-feda14ac3498",
+                "document_name": "hut-campus-card.md",
+                "content": "学校：湖南工业大学；领域：生活。\n采集核验日期：2026-10-10；原文发布日：2025-01-17。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xjzx.hut.edu.cn/info/1261/4474.htm\n\n校园卡服务中心Q&A说明：智慧工大APP账户激活时绑定学号，可关联校园卡。校园卡充值从“服务中心→生活服务→校园卡充值”选择金额并支付。丢卡可先从APP首页校园卡服务挂失，再到校园卡服务中心补卡。卡密码重置需携带相关身份证件到服务中心办理。绑卡出现“学工号不存在”时先核对填写信息，不清楚学号可联系辅导员或班主任。资料发布于2025年，APP菜单和办理要求可能更新，请核对原文与实际页面。助手不能执行充值、挂失或查看个人余额。",
+                "heading": "湖南工业大学校园卡充值挂失与绑卡",
+                "page": null,
+                "paragraph": 2
+              },
+              {
+                "number": 3,
+                "chunk_id": "b6fecfb0-3e41-47f3-987d-585f9d045b67",
+                "version_id": "562fedf7-4ae1-4362-b255-a71565e18f89",
+                "document_id": "d5d41880-09a6-45ab-a97f-7f4483aaf634",
+                "document_name": "hut-it-repair-2026.md",
+                "content": "学校：湖南工业大学；领域：信息服务。\n采集核验日期：2026-10-10；原文发布日：2026-09-01。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xjzx.hut.edu.cn/info/1371/6215.htm\n\n现教中心2026年9月故障报修通知面向全校师生，公布：多媒体教室故障 22183826；公共计算机中心故障 22183200；校园卡及一卡通、用水用电充值问题 22183800；学生宿舍区域网络故障 17873310086；办公楼网络故障 22182159、22183501；智慧校园门户、APP故障与咨询 22182159。咨询及建议邮箱 xjzx@hut.edu.cn 。以上为官方公开业务联系方式，未验证接通情况或服务时段；固定电话校外拨打通常需加区号0731。项目内工单仅由本项目管理员处理，不会自动送达学校现教中心。",
+                "heading": "湖南工业大学2026故障报修联系方式",
+                "page": null,
+                "paragraph": 2
+              }
+            ],
+            "answerable": true,
+            "model_mode": "real",
+            "answer_kind": "knowledge"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "30f06bc9-9ff1-431c-aa67-25ead4299b44"
+          }
+        }
+      ],
+      "conversation_id": "73890776-acfb-487d-865e-0689194f69dd",
+      "answer": {
+        "answer_id": "30f06bc9-9ff1-431c-aa67-25ead4299b44",
+        "content": "根据湖南工业大学校园卡服务中心的说明，校园卡丢失后可以先在智慧工大APP首页的“校园卡服务”中办理挂失，然后到校园卡服务中心补卡。如涉及校园卡及一卡通相关问题，也可拨打官方公布的电话22183800咨询。资料发布于2025年，APP菜单和办理要求可能更新，办理时请以最新官方通知和实际页面为准。",
+        "citations": [
+          {
+            "number": 1,
+            "chunk_id": "c04a8c9d-82ec-48b0-86e5-e82ed16d6fd8",
+            "version_id": "c6459d99-a1d0-4262-aa1d-2d9fc98d5409",
+            "document_id": "ae48d6e1-e3aa-40b4-8690-feda14ac3498",
+            "document_name": "hut-campus-card.md",
+            "content": "学校：湖南工业大学；领域：生活。\n采集核验日期：2026-10-10；原文发布日：2025-01-17。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xjzx.hut.edu.cn/info/1261/4474.htm\n\n校园卡服务中心Q&A说明：智慧工大APP账户激活时绑定学号，可关联校园卡。校园卡充值从“服务中心→生活服务→校园卡充值”选择金额并支付。丢卡可先从APP首页校园卡服务挂失，再到校园卡服务中心补卡。卡密码重置需携带相关身份证件到服务中心办理。绑卡出现“学工号不存在”时先核对填写信息，不清楚学号可联系辅导员或班主任。资料发布于2025年，APP菜单和办理要求可能更新，请核对原文与实际页面。助手不能执行充值、挂失或查看个人余额。",
+            "heading": "湖南工业大学校园卡充值挂失与绑卡",
+            "page": null,
+            "paragraph": 2
+          },
+          {
+            "number": 3,
+            "chunk_id": "b6fecfb0-3e41-47f3-987d-585f9d045b67",
+            "version_id": "562fedf7-4ae1-4362-b255-a71565e18f89",
+            "document_id": "d5d41880-09a6-45ab-a97f-7f4483aaf634",
+            "document_name": "hut-it-repair-2026.md",
+            "content": "学校：湖南工业大学；领域：信息服务。\n采集核验日期：2026-10-10；原文发布日：2026-09-01。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xjzx.hut.edu.cn/info/1371/6215.htm\n\n现教中心2026年9月故障报修通知面向全校师生，公布：多媒体教室故障 22183826；公共计算机中心故障 22183200；校园卡及一卡通、用水用电充值问题 22183800；学生宿舍区域网络故障 17873310086；办公楼网络故障 22182159、22183501；智慧校园门户、APP故障与咨询 22182159。咨询及建议邮箱 xjzx@hut.edu.cn 。以上为官方公开业务联系方式，未验证接通情况或服务时段；固定电话校外拨打通常需加区号0731。项目内工单仅由本项目管理员处理，不会自动送达学校现教中心。",
+            "heading": "湖南工业大学2026故障报修联系方式",
+            "page": null,
+            "paragraph": 2
+          }
+        ],
+        "answerable": true,
+        "model_mode": "real",
+        "answer_kind": "knowledge"
+      },
+      "answerability_match": true,
+      "answer_kind_match": true,
+      "expected_document_cited": true,
+      "human_supported_answer": null,
+      "citation_checks": [
+        {
+          "chunk_id": "c04a8c9d-82ec-48b0-86e5-e82ed16d6fd8",
+          "accessible": true,
+          "version_matches": true,
+          "source": {
+            "id": "c04a8c9d-82ec-48b0-86e5-e82ed16d6fd8",
+            "created_at": "2026-10-10T08:15:40.398775+00:00",
+            "content": "学校：湖南工业大学；领域：生活。\n采集核验日期：2026-10-10；原文发布日：2025-01-17。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xjzx.hut.edu.cn/info/1261/4474.htm\n\n校园卡服务中心Q&A说明：智慧工大APP账户激活时绑定学号，可关联校园卡。校园卡充值从“服务中心→生活服务→校园卡充值”选择金额并支付。丢卡可先从APP首页校园卡服务挂失，再到校园卡服务中心补卡。卡密码重置需携带相关身份证件到服务中心办理。绑卡出现“学工号不存在”时先核对填写信息，不清楚学号可联系辅导员或班主任。资料发布于2025年，APP菜单和办理要求可能更新，请核对原文与实际页面。助手不能执行充值、挂失或查看个人余额。",
+            "heading": "湖南工业大学校园卡充值挂失与绑卡",
+            "page": null,
+            "paragraph": 2,
+            "version_id": "c6459d99-a1d0-4262-aa1d-2d9fc98d5409",
+            "document_name": "hut-campus-card.md"
+          }
+        },
+        {
+          "chunk_id": "b6fecfb0-3e41-47f3-987d-585f9d045b67",
+          "accessible": true,
+          "version_matches": true,
+          "source": {
+            "id": "b6fecfb0-3e41-47f3-987d-585f9d045b67",
+            "created_at": "2026-10-10T08:16:18.003958+00:00",
+            "content": "学校：湖南工业大学；领域：信息服务。\n采集核验日期：2026-10-10；原文发布日：2026-09-01。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xjzx.hut.edu.cn/info/1371/6215.htm\n\n现教中心2026年9月故障报修通知面向全校师生，公布：多媒体教室故障 22183826；公共计算机中心故障 22183200；校园卡及一卡通、用水用电充值问题 22183800；学生宿舍区域网络故障 17873310086；办公楼网络故障 22182159、22183501；智慧校园门户、APP故障与咨询 22182159。咨询及建议邮箱 xjzx@hut.edu.cn 。以上为官方公开业务联系方式，未验证接通情况或服务时段；固定电话校外拨打通常需加区号0731。项目内工单仅由本项目管理员处理，不会自动送达学校现教中心。",
+            "heading": "湖南工业大学2026故障报修联系方式",
+            "page": null,
+            "paragraph": 2,
+            "version_id": "562fedf7-4ae1-4362-b255-a71565e18f89",
+            "document_name": "hut-it-repair-2026.md"
+          }
+        }
+      ],
+      "citations_verified": true,
+      "elapsed_ms": 10172
+    },
+    {
+      "case": {
+        "id": "hut-electricity-refund",
+        "question": "湖南工业大学宿舍电费充错房间，在哪里申请退费？",
+        "answerable": true,
+        "answer_kind": "knowledge",
+        "expected_document": "hut-dorm-electricity.md"
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "routing",
+            "message": "正在理解你的问题"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "retrieving",
+            "message": "正在查找校园 IT 资料"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回答并校验来源"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "795637ba-4154-41e9-bf84-110cf6df9a5d",
+            "content": "在智慧工大APP中进入“学生宿舍电费充值退费”，填写信息后提交审核。宿舍电费充值路径为“服务中心→生活服务→电费充值”选择房间充值；缴错房间可进入“学生宿舍电费充值退费”申请。校园卡及用水用电充值问题联系电话为22183800。",
+            "citations": [
+              {
+                "number": 1,
+                "chunk_id": "50a24489-e8bd-4b2e-9d8e-85cea37a38f9",
+                "version_id": "82af9cfb-bbfc-48ef-9cfd-bffb470179f0",
+                "document_id": "25ebcc58-ee97-47c4-bb4c-fa915236244a",
+                "document_name": "hut-dorm-electricity.md",
+                "content": "学校：湖南工业大学；领域：生活。\n采集核验日期：2026-10-10；原文发布日：2025-01-17。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xjzx.hut.edu.cn/info/1261/4474.htm\n原文来源：https://xjzx.hut.edu.cn/info/1371/6215.htm\n\n校园卡Q&A中，宿舍电费通过智慧工大APP“服务中心→生活服务→电费充值”选择房间充值。缴错房间可进入“学生宿舍电费充值退费”，填写信息后提交审核，未提供即时到账或一定获批的承诺。2026年9月1日故障报修通知将校园卡及用水用电充值问题联系电话列为 22183800。菜单步骤来源于2025年Q&A，应结合当前APP核对。本资料没有现行每度电价格、免费电量或水费标准，不能推测费用。助手不能查询余额或替用户发起支付、退款。",
+                "heading": "湖南工业大学宿舍电费充值与缴错房间退费",
+                "page": null,
+                "paragraph": 2
+              }
+            ],
+            "answerable": true,
+            "model_mode": "real",
+            "answer_kind": "knowledge"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "795637ba-4154-41e9-bf84-110cf6df9a5d"
+          }
+        }
+      ],
+      "conversation_id": "022e2952-a852-4901-b5e8-c56248226753",
+      "answer": {
+        "answer_id": "795637ba-4154-41e9-bf84-110cf6df9a5d",
+        "content": "在智慧工大APP中进入“学生宿舍电费充值退费”，填写信息后提交审核。宿舍电费充值路径为“服务中心→生活服务→电费充值”选择房间充值；缴错房间可进入“学生宿舍电费充值退费”申请。校园卡及用水用电充值问题联系电话为22183800。",
+        "citations": [
+          {
+            "number": 1,
+            "chunk_id": "50a24489-e8bd-4b2e-9d8e-85cea37a38f9",
+            "version_id": "82af9cfb-bbfc-48ef-9cfd-bffb470179f0",
+            "document_id": "25ebcc58-ee97-47c4-bb4c-fa915236244a",
+            "document_name": "hut-dorm-electricity.md",
+            "content": "学校：湖南工业大学；领域：生活。\n采集核验日期：2026-10-10；原文发布日：2025-01-17。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xjzx.hut.edu.cn/info/1261/4474.htm\n原文来源：https://xjzx.hut.edu.cn/info/1371/6215.htm\n\n校园卡Q&A中，宿舍电费通过智慧工大APP“服务中心→生活服务→电费充值”选择房间充值。缴错房间可进入“学生宿舍电费充值退费”，填写信息后提交审核，未提供即时到账或一定获批的承诺。2026年9月1日故障报修通知将校园卡及用水用电充值问题联系电话列为 22183800。菜单步骤来源于2025年Q&A，应结合当前APP核对。本资料没有现行每度电价格、免费电量或水费标准，不能推测费用。助手不能查询余额或替用户发起支付、退款。",
+            "heading": "湖南工业大学宿舍电费充值与缴错房间退费",
+            "page": null,
+            "paragraph": 2
+          }
+        ],
+        "answerable": true,
+        "model_mode": "real",
+        "answer_kind": "knowledge"
+      },
+      "answerability_match": true,
+      "answer_kind_match": true,
+      "expected_document_cited": true,
+      "human_supported_answer": null,
+      "citation_checks": [
+        {
+          "chunk_id": "50a24489-e8bd-4b2e-9d8e-85cea37a38f9",
+          "accessible": true,
+          "version_matches": true,
+          "source": {
+            "id": "50a24489-e8bd-4b2e-9d8e-85cea37a38f9",
+            "created_at": "2026-10-10T08:15:46.850484+00:00",
+            "content": "学校：湖南工业大学；领域：生活。\n采集核验日期：2026-10-10；原文发布日：2025-01-17。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xjzx.hut.edu.cn/info/1261/4474.htm\n原文来源：https://xjzx.hut.edu.cn/info/1371/6215.htm\n\n校园卡Q&A中，宿舍电费通过智慧工大APP“服务中心→生活服务→电费充值”选择房间充值。缴错房间可进入“学生宿舍电费充值退费”，填写信息后提交审核，未提供即时到账或一定获批的承诺。2026年9月1日故障报修通知将校园卡及用水用电充值问题联系电话列为 22183800。菜单步骤来源于2025年Q&A，应结合当前APP核对。本资料没有现行每度电价格、免费电量或水费标准，不能推测费用。助手不能查询余额或替用户发起支付、退款。",
+            "heading": "湖南工业大学宿舍电费充值与缴错房间退费",
+            "page": null,
+            "paragraph": 2,
+            "version_id": "82af9cfb-bbfc-48ef-9cfd-bffb470179f0",
+            "document_name": "hut-dorm-electricity.md"
+          }
+        }
+      ],
+      "citations_verified": true,
+      "elapsed_ms": 7562
+    },
+    {
+      "case": {
+        "id": "hut-email",
+        "question": "湖南工业大学学生邮箱后缀是什么，在哪注册？",
+        "answerable": true,
+        "answer_kind": "knowledge",
+        "expected_document": "hut-education-email.md"
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "routing",
+            "message": "正在理解你的问题"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "retrieving",
+            "message": "正在查找校园 IT 资料"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回答并校验来源"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "3e88dd54-0144-4f38-9270-7937367c8811",
+            "content": "湖南工业大学学生邮箱格式为学号或别名@stu.hut.edu.cn。注册方式：从邮箱注册进入统一身份认证账号激活，指南说明完成激活后邮箱同时激活；也可从学校首页的统一身份认证进入一网通办，再查找现教中心校园邮箱登录。网页登录入口为 https://mail.hut.edu.cn 。",
+            "citations": [
+              {
+                "number": 1,
+                "chunk_id": "e2bdead3-33df-447f-a4db-f7c84c81f1bd",
+                "version_id": "c27d8e86-7656-48e2-836c-a48fca5c835d",
+                "document_id": "2e6aeea4-9290-4260-b4ab-40dca8f1636f",
+                "document_name": "hut-education-email.md",
+                "content": "学校：湖南工业大学；领域：信息服务。\n采集核验日期：2026-10-10；原文发布日：2025-11-05。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xjzx.hut.edu.cn/info/1261/5385.htm\n\n学校官方邮箱操作指南给出的网页登录入口是 https://mail.hut.edu.cn 。新用户从邮箱注册进入统一身份认证账号激活，指南说明完成激活后邮箱同时激活。教职工邮箱格式为工号或别名@hut.edu.cn，学生邮箱格式为学号或别名@stu.hut.edu.cn。也可从学校首页的统一身份认证进入一网通办，再查找现教中心校园邮箱登录。指南介绍了手机邮箱客户端和绑定登录方式，具体以当前官方页面为准。本助手不判断某个邮箱是否已经开通，也不收集邮箱密码。",
+                "heading": "湖南工业大学学生与教职工教育邮箱",
+                "page": null,
+                "paragraph": 2
+              }
+            ],
+            "answerable": true,
+            "model_mode": "real",
+            "answer_kind": "knowledge"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "3e88dd54-0144-4f38-9270-7937367c8811"
+          }
+        }
+      ],
+      "conversation_id": "d42386d6-01c7-4a66-904b-815fe24e9b05",
+      "answer": {
+        "answer_id": "3e88dd54-0144-4f38-9270-7937367c8811",
+        "content": "湖南工业大学学生邮箱格式为学号或别名@stu.hut.edu.cn。注册方式：从邮箱注册进入统一身份认证账号激活，指南说明完成激活后邮箱同时激活；也可从学校首页的统一身份认证进入一网通办，再查找现教中心校园邮箱登录。网页登录入口为 https://mail.hut.edu.cn 。",
+        "citations": [
+          {
+            "number": 1,
+            "chunk_id": "e2bdead3-33df-447f-a4db-f7c84c81f1bd",
+            "version_id": "c27d8e86-7656-48e2-836c-a48fca5c835d",
+            "document_id": "2e6aeea4-9290-4260-b4ab-40dca8f1636f",
+            "document_name": "hut-education-email.md",
+            "content": "学校：湖南工业大学；领域：信息服务。\n采集核验日期：2026-10-10；原文发布日：2025-11-05。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xjzx.hut.edu.cn/info/1261/5385.htm\n\n学校官方邮箱操作指南给出的网页登录入口是 https://mail.hut.edu.cn 。新用户从邮箱注册进入统一身份认证账号激活，指南说明完成激活后邮箱同时激活。教职工邮箱格式为工号或别名@hut.edu.cn，学生邮箱格式为学号或别名@stu.hut.edu.cn。也可从学校首页的统一身份认证进入一网通办，再查找现教中心校园邮箱登录。指南介绍了手机邮箱客户端和绑定登录方式，具体以当前官方页面为准。本助手不判断某个邮箱是否已经开通，也不收集邮箱密码。",
+            "heading": "湖南工业大学学生与教职工教育邮箱",
+            "page": null,
+            "paragraph": 2
+          }
+        ],
+        "answerable": true,
+        "model_mode": "real",
+        "answer_kind": "knowledge"
+      },
+      "answerability_match": true,
+      "answer_kind_match": true,
+      "expected_document_cited": true,
+      "human_supported_answer": null,
+      "citation_checks": [
+        {
+          "chunk_id": "e2bdead3-33df-447f-a4db-f7c84c81f1bd",
+          "accessible": true,
+          "version_matches": true,
+          "source": {
+            "id": "e2bdead3-33df-447f-a4db-f7c84c81f1bd",
+            "created_at": "2026-10-10T08:16:05.379996+00:00",
+            "content": "学校：湖南工业大学；领域：信息服务。\n采集核验日期：2026-10-10；原文发布日：2025-11-05。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xjzx.hut.edu.cn/info/1261/5385.htm\n\n学校官方邮箱操作指南给出的网页登录入口是 https://mail.hut.edu.cn 。新用户从邮箱注册进入统一身份认证账号激活，指南说明完成激活后邮箱同时激活。教职工邮箱格式为工号或别名@hut.edu.cn，学生邮箱格式为学号或别名@stu.hut.edu.cn。也可从学校首页的统一身份认证进入一网通办，再查找现教中心校园邮箱登录。指南介绍了手机邮箱客户端和绑定登录方式，具体以当前官方页面为准。本助手不判断某个邮箱是否已经开通，也不收集邮箱密码。",
+            "heading": "湖南工业大学学生与教职工教育邮箱",
+            "page": null,
+            "paragraph": 2,
+            "version_id": "c27d8e86-7656-48e2-836c-a48fca5c835d",
+            "document_name": "hut-education-email.md"
+          }
+        }
+      ],
+      "citations_verified": true,
+      "elapsed_ms": 8438
+    },
+    {
+      "case": {
+        "id": "hut-repair",
+        "question": "湖南工业大学宿舍网络故障应该打哪个电话？",
+        "answerable": true,
+        "answer_kind": "knowledge",
+        "expected_document": "hut-it-repair-2026.md"
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "routing",
+            "message": "正在理解你的问题"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "retrieving",
+            "message": "正在查找校园 IT 资料"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回答并校验来源"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "ec56a8cc-8414-44a6-be4e-6b03092522f5",
+            "content": "湖南工业大学学生宿舍区域网络故障的报修电话是 17873310086。该号码来自现教中心2026年9月故障报修通知，其中明确列出“学生宿舍区域网络故障 17873310086”。",
+            "citations": [
+              {
+                "number": 1,
+                "chunk_id": "b6fecfb0-3e41-47f3-987d-585f9d045b67",
+                "version_id": "562fedf7-4ae1-4362-b255-a71565e18f89",
+                "document_id": "d5d41880-09a6-45ab-a97f-7f4483aaf634",
+                "document_name": "hut-it-repair-2026.md",
+                "content": "学校：湖南工业大学；领域：信息服务。\n采集核验日期：2026-10-10；原文发布日：2026-09-01。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xjzx.hut.edu.cn/info/1371/6215.htm\n\n现教中心2026年9月故障报修通知面向全校师生，公布：多媒体教室故障 22183826；公共计算机中心故障 22183200；校园卡及一卡通、用水用电充值问题 22183800；学生宿舍区域网络故障 17873310086；办公楼网络故障 22182159、22183501；智慧校园门户、APP故障与咨询 22182159。咨询及建议邮箱 xjzx@hut.edu.cn 。以上为官方公开业务联系方式，未验证接通情况或服务时段；固定电话校外拨打通常需加区号0731。项目内工单仅由本项目管理员处理，不会自动送达学校现教中心。",
+                "heading": "湖南工业大学2026故障报修联系方式",
+                "page": null,
+                "paragraph": 2
+              }
+            ],
+            "answerable": true,
+            "model_mode": "real",
+            "answer_kind": "knowledge"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "ec56a8cc-8414-44a6-be4e-6b03092522f5"
+          }
+        }
+      ],
+      "conversation_id": "3aab09bd-78f2-4ea5-a667-6168e7c713b2",
+      "answer": {
+        "answer_id": "ec56a8cc-8414-44a6-be4e-6b03092522f5",
+        "content": "湖南工业大学学生宿舍区域网络故障的报修电话是 17873310086。该号码来自现教中心2026年9月故障报修通知，其中明确列出“学生宿舍区域网络故障 17873310086”。",
+        "citations": [
+          {
+            "number": 1,
+            "chunk_id": "b6fecfb0-3e41-47f3-987d-585f9d045b67",
+            "version_id": "562fedf7-4ae1-4362-b255-a71565e18f89",
+            "document_id": "d5d41880-09a6-45ab-a97f-7f4483aaf634",
+            "document_name": "hut-it-repair-2026.md",
+            "content": "学校：湖南工业大学；领域：信息服务。\n采集核验日期：2026-10-10；原文发布日：2026-09-01。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xjzx.hut.edu.cn/info/1371/6215.htm\n\n现教中心2026年9月故障报修通知面向全校师生，公布：多媒体教室故障 22183826；公共计算机中心故障 22183200；校园卡及一卡通、用水用电充值问题 22183800；学生宿舍区域网络故障 17873310086；办公楼网络故障 22182159、22183501；智慧校园门户、APP故障与咨询 22182159。咨询及建议邮箱 xjzx@hut.edu.cn 。以上为官方公开业务联系方式，未验证接通情况或服务时段；固定电话校外拨打通常需加区号0731。项目内工单仅由本项目管理员处理，不会自动送达学校现教中心。",
+            "heading": "湖南工业大学2026故障报修联系方式",
+            "page": null,
+            "paragraph": 2
+          }
+        ],
+        "answerable": true,
+        "model_mode": "real",
+        "answer_kind": "knowledge"
+      },
+      "answerability_match": true,
+      "answer_kind_match": true,
+      "expected_document_cited": true,
+      "human_supported_answer": null,
+      "citation_checks": [
+        {
+          "chunk_id": "b6fecfb0-3e41-47f3-987d-585f9d045b67",
+          "accessible": true,
+          "version_matches": true,
+          "source": {
+            "id": "b6fecfb0-3e41-47f3-987d-585f9d045b67",
+            "created_at": "2026-10-10T08:16:18.003958+00:00",
+            "content": "学校：湖南工业大学；领域：信息服务。\n采集核验日期：2026-10-10；原文发布日：2026-09-01。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xjzx.hut.edu.cn/info/1371/6215.htm\n\n现教中心2026年9月故障报修通知面向全校师生，公布：多媒体教室故障 22183826；公共计算机中心故障 22183200；校园卡及一卡通、用水用电充值问题 22183800；学生宿舍区域网络故障 17873310086；办公楼网络故障 22182159、22183501；智慧校园门户、APP故障与咨询 22182159。咨询及建议邮箱 xjzx@hut.edu.cn 。以上为官方公开业务联系方式，未验证接通情况或服务时段；固定电话校外拨打通常需加区号0731。项目内工单仅由本项目管理员处理，不会自动送达学校现教中心。",
+            "heading": "湖南工业大学2026故障报修联系方式",
+            "page": null,
+            "paragraph": 2,
+            "version_id": "562fedf7-4ae1-4362-b255-a71565e18f89",
+            "document_name": "hut-it-repair-2026.md"
+          }
+        }
+      ],
+      "citations_verified": true,
+      "elapsed_ms": 7359
+    },
+    {
+      "case": {
+        "id": "hut-work-study",
+        "question": "湖南工业大学2026年秋季勤工助学申请有什么条件，需要什么表格？",
+        "answerable": true,
+        "answer_kind": "knowledge",
+        "expected_document": "hut-work-study-2026.md"
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "routing",
+            "message": "正在理解你的问题"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "retrieving",
+            "message": "正在查找校园 IT 资料"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回答并校验来源"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "f7c220d2-852a-4668-b74b-7335c0185499",
+            "content": "根据来源1，2026年秋季勤工助学申请原则上面向2026级新生，且应已通过学院2026-2027学年家庭经济困难认定；面试需携带经学院辅导员签字并盖章的勤工助学申请表，到招聘信息表指定的时间地点面试。学院勤工助学岗位由学院依名额自行招募。表格为勤工助学申请表（原文链接指向官网申请表，表格页发布于2022年但被本次通知引用）。注意：岗位招聘信息为PNG附件，本次未核验各岗位面试日期、名额和薪酬，不能声称岗位目前仍开放；请打开附件并向招募部门确认。",
+            "citations": [
+              {
+                "number": 1,
+                "chunk_id": "5873ca0b-cb26-4c43-b529-2c21268ec76a",
+                "version_id": "83c67ea1-75e3-43b3-9e94-9580a4348050",
+                "document_id": "61c68f49-5d8d-4238-b2a1-4c3f7e79cd3b",
+                "document_name": "hut-work-study-2026.md",
+                "content": "学校：湖南工业大学；领域：学工。\n采集核验日期：2026-10-10；原文发布日：2026-09-30。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xsc.hut.edu.cn/info/1012/9625.htm\n原文来源：https://xsc.hut.edu.cn/info/1006/2865.htm\n\n2026年秋季勤工助学岗位招募通知说明：本次申请原则上面向2026级新生，且应已通过学院2026-2027学年家庭经济困难认定。面试需携带经学院辅导员签字并盖章的勤工助学申请表，到招聘信息表指定的时间地点面试。学院勤工助学岗位由学院依名额自行招募。原文链接指向官网申请表，表格页发布于2022年但被本次通知引用。岗位招聘信息为PNG附件，本次未核验各岗位面试日期、名额和薪酬，不能声称岗位目前仍开放；请打开附件并向招募部门确认。个人及银行信息仅在学校正式表格中按要求提交。",
+                "heading": "湖南工业大学2026秋季勤工助学申请",
+                "page": null,
+                "paragraph": 2
+              }
+            ],
+            "answerable": true,
+            "model_mode": "real",
+            "answer_kind": "knowledge"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "f7c220d2-852a-4668-b74b-7335c0185499"
+          }
+        }
+      ],
+      "conversation_id": "073556e6-5358-4ca0-8049-7a631171dbaa",
+      "answer": {
+        "answer_id": "f7c220d2-852a-4668-b74b-7335c0185499",
+        "content": "根据来源1，2026年秋季勤工助学申请原则上面向2026级新生，且应已通过学院2026-2027学年家庭经济困难认定；面试需携带经学院辅导员签字并盖章的勤工助学申请表，到招聘信息表指定的时间地点面试。学院勤工助学岗位由学院依名额自行招募。表格为勤工助学申请表（原文链接指向官网申请表，表格页发布于2022年但被本次通知引用）。注意：岗位招聘信息为PNG附件，本次未核验各岗位面试日期、名额和薪酬，不能声称岗位目前仍开放；请打开附件并向招募部门确认。",
+        "citations": [
+          {
+            "number": 1,
+            "chunk_id": "5873ca0b-cb26-4c43-b529-2c21268ec76a",
+            "version_id": "83c67ea1-75e3-43b3-9e94-9580a4348050",
+            "document_id": "61c68f49-5d8d-4238-b2a1-4c3f7e79cd3b",
+            "document_name": "hut-work-study-2026.md",
+            "content": "学校：湖南工业大学；领域：学工。\n采集核验日期：2026-10-10；原文发布日：2026-09-30。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xsc.hut.edu.cn/info/1012/9625.htm\n原文来源：https://xsc.hut.edu.cn/info/1006/2865.htm\n\n2026年秋季勤工助学岗位招募通知说明：本次申请原则上面向2026级新生，且应已通过学院2026-2027学年家庭经济困难认定。面试需携带经学院辅导员签字并盖章的勤工助学申请表，到招聘信息表指定的时间地点面试。学院勤工助学岗位由学院依名额自行招募。原文链接指向官网申请表，表格页发布于2022年但被本次通知引用。岗位招聘信息为PNG附件，本次未核验各岗位面试日期、名额和薪酬，不能声称岗位目前仍开放；请打开附件并向招募部门确认。个人及银行信息仅在学校正式表格中按要求提交。",
+            "heading": "湖南工业大学2026秋季勤工助学申请",
+            "page": null,
+            "paragraph": 2
+          }
+        ],
+        "answerable": true,
+        "model_mode": "real",
+        "answer_kind": "knowledge"
+      },
+      "answerability_match": true,
+      "answer_kind_match": true,
+      "expected_document_cited": true,
+      "human_supported_answer": null,
+      "citation_checks": [
+        {
+          "chunk_id": "5873ca0b-cb26-4c43-b529-2c21268ec76a",
+          "accessible": true,
+          "version_matches": true,
+          "source": {
+            "id": "5873ca0b-cb26-4c43-b529-2c21268ec76a",
+            "created_at": "2026-10-10T08:16:36.950369+00:00",
+            "content": "学校：湖南工业大学；领域：学工。\n采集核验日期：2026-10-10；原文发布日：2026-09-30。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xsc.hut.edu.cn/info/1012/9625.htm\n原文来源：https://xsc.hut.edu.cn/info/1006/2865.htm\n\n2026年秋季勤工助学岗位招募通知说明：本次申请原则上面向2026级新生，且应已通过学院2026-2027学年家庭经济困难认定。面试需携带经学院辅导员签字并盖章的勤工助学申请表，到招聘信息表指定的时间地点面试。学院勤工助学岗位由学院依名额自行招募。原文链接指向官网申请表，表格页发布于2022年但被本次通知引用。岗位招聘信息为PNG附件，本次未核验各岗位面试日期、名额和薪酬，不能声称岗位目前仍开放；请打开附件并向招募部门确认。个人及银行信息仅在学校正式表格中按要求提交。",
+            "heading": "湖南工业大学2026秋季勤工助学申请",
+            "page": null,
+            "paragraph": 2,
+            "version_id": "83c67ea1-75e3-43b3-9e94-9580a4348050",
+            "document_name": "hut-work-study-2026.md"
+          }
+        }
+      ],
+      "citations_verified": true,
+      "elapsed_ms": 8516
+    },
+    {
+      "case": {
+        "id": "hut-student-center",
+        "question": "湖南工业大学学生事务中心在哪里，联系电话是多少？",
+        "answerable": true,
+        "answer_kind": "knowledge",
+        "expected_document": "hut-student-affairs.md"
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "routing",
+            "message": "正在理解你的问题"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "retrieving",
+            "message": "正在查找校园 IT 资料"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回答并校验来源"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "3f6bd012-357c-49f4-9871-41fe77b9b467",
+            "content": "湖南工业大学学生事务中心位于萃苑学生公寓连廊二楼，联系电话为22182387（校外拨打通常加0731，即0731-22182387）。",
+            "citations": [
+              {
+                "number": 1,
+                "chunk_id": "5631c3ca-2621-4d02-ab92-2d293fcfaf02",
+                "version_id": "84812877-af4d-447e-a57e-a0dac0fb65bc",
+                "document_id": "7a300d04-fd6c-4d48-adb9-66a82a0335d6",
+                "document_name": "hut-student-affairs.md",
+                "content": "学校：湖南工业大学；领域：学工。\n采集核验日期：2026-10-10；原文发布日：页面未标注。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xsc.hut.edu.cn/zzjg/bmjs.htm\n原文来源：https://xsc.hut.edu.cn/sqgl/xsswzx.htm\n\n学生工作部负责日常管理、资助、心理健康教育、宿舍与相关学生事务。官网部门介绍列出学生事务中心位于萃苑学生公寓连廊二楼，联系方式 22182387，负责服务大厅项目协调、事务受理和反馈。学生管理科位于崇德楼103，联系电话 22183105，负责本科生日常事务、安全管理等。学生事务中心栏目有窗口时间安排表，但本次未核验2026年各窗口开放时间，请从栏目原文或电话确认后再前往。号码按官网显示，固定电话校外拨打通常加0731。",
+                "heading": "湖南工业大学学生事务中心与学工办事",
+                "page": null,
+                "paragraph": 2
+              }
+            ],
+            "answerable": true,
+            "model_mode": "real",
+            "answer_kind": "knowledge"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "3f6bd012-357c-49f4-9871-41fe77b9b467"
+          }
+        }
+      ],
+      "conversation_id": "5e15c449-1bb8-4d64-8eb6-f3b7e79b4481",
+      "answer": {
+        "answer_id": "3f6bd012-357c-49f4-9871-41fe77b9b467",
+        "content": "湖南工业大学学生事务中心位于萃苑学生公寓连廊二楼，联系电话为22182387（校外拨打通常加0731，即0731-22182387）。",
+        "citations": [
+          {
+            "number": 1,
+            "chunk_id": "5631c3ca-2621-4d02-ab92-2d293fcfaf02",
+            "version_id": "84812877-af4d-447e-a57e-a0dac0fb65bc",
+            "document_id": "7a300d04-fd6c-4d48-adb9-66a82a0335d6",
+            "document_name": "hut-student-affairs.md",
+            "content": "学校：湖南工业大学；领域：学工。\n采集核验日期：2026-10-10；原文发布日：页面未标注。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xsc.hut.edu.cn/zzjg/bmjs.htm\n原文来源：https://xsc.hut.edu.cn/sqgl/xsswzx.htm\n\n学生工作部负责日常管理、资助、心理健康教育、宿舍与相关学生事务。官网部门介绍列出学生事务中心位于萃苑学生公寓连廊二楼，联系方式 22182387，负责服务大厅项目协调、事务受理和反馈。学生管理科位于崇德楼103，联系电话 22183105，负责本科生日常事务、安全管理等。学生事务中心栏目有窗口时间安排表，但本次未核验2026年各窗口开放时间，请从栏目原文或电话确认后再前往。号码按官网显示，固定电话校外拨打通常加0731。",
+            "heading": "湖南工业大学学生事务中心与学工办事",
+            "page": null,
+            "paragraph": 2
+          }
+        ],
+        "answerable": true,
+        "model_mode": "real",
+        "answer_kind": "knowledge"
+      },
+      "answerability_match": true,
+      "answer_kind_match": true,
+      "expected_document_cited": true,
+      "human_supported_answer": null,
+      "citation_checks": [
+        {
+          "chunk_id": "5631c3ca-2621-4d02-ab92-2d293fcfaf02",
+          "accessible": true,
+          "version_matches": true,
+          "source": {
+            "id": "5631c3ca-2621-4d02-ab92-2d293fcfaf02",
+            "created_at": "2026-10-10T08:16:24.186184+00:00",
+            "content": "学校：湖南工业大学；领域：学工。\n采集核验日期：2026-10-10；原文发布日：页面未标注。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xsc.hut.edu.cn/zzjg/bmjs.htm\n原文来源：https://xsc.hut.edu.cn/sqgl/xsswzx.htm\n\n学生工作部负责日常管理、资助、心理健康教育、宿舍与相关学生事务。官网部门介绍列出学生事务中心位于萃苑学生公寓连廊二楼，联系方式 22182387，负责服务大厅项目协调、事务受理和反馈。学生管理科位于崇德楼103，联系电话 22183105，负责本科生日常事务、安全管理等。学生事务中心栏目有窗口时间安排表，但本次未核验2026年各窗口开放时间，请从栏目原文或电话确认后再前往。号码按官网显示，固定电话校外拨打通常加0731。",
+            "heading": "湖南工业大学学生事务中心与学工办事",
+            "page": null,
+            "paragraph": 2,
+            "version_id": "84812877-af4d-447e-a57e-a0dac0fb65bc",
+            "document_name": "hut-student-affairs.md"
+          }
+        }
+      ],
+      "citations_verified": true,
+      "elapsed_ms": 8203
+    },
+    {
+      "case": {
+        "id": "hut-teacher-room",
+        "question": "湖南工业大学老师申请借用公共机房需要什么手续？",
+        "answerable": true,
+        "answer_kind": "knowledge",
+        "expected_document": "hut-computer-room.md"
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "routing",
+            "message": "正在理解你的问题"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "retrieving",
+            "message": "正在查找校园 IT 资料"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回答并校验来源"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "59cae114-ba6a-4857-96a1-47762d17b5d4",
+            "content": "根据来源1，学院或部门借用机房需要盖章的纸质申请表，由崇仁楼221工作人员按需求分配。此外，教师开门权限需提供职工号申请授权，授权后使用校园卡或智慧工大钥匙串；如需安装教学软件，应提前一星期向该办公室提供正版软件。",
+            "citations": [
+              {
+                "number": 1,
+                "chunk_id": "45e63021-e24a-43e0-9389-c157454110ba",
+                "version_id": "519f941c-4721-4422-8ff8-cb94413170e5",
+                "document_id": "212437ad-d19b-4be6-9b09-441f1842a8a4",
+                "document_name": "hut-computer-room.md",
+                "content": "学校：湖南工业大学；领域：教学。\n采集核验日期：2026-10-10；原文发布日：2025-02-11。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xjzx.hut.edu.cn/info/1261/4504.htm\n\n公共计算机中心Q&A说明：晚上使用机房可从智慧工大机房预约功能按要求提交申请。学院或部门借用机房，需要盖章的纸质申请表，由崇仁楼221工作人员按需求分配。教学软件安装应提前一星期向该办公室提供正版软件；教师开门权限需提供职工号申请授权，授权后使用校园卡或智慧工大钥匙串。机房上课冲突可联系值班人员 22183200 协调，并在教务系统处理调课。机房禁止带食品饮料，课后关闭电脑、投影、空调和照明。2025年流程可能调整，预约是否批准及可用时段请以系统和管理人员回复为准。",
+                "heading": "湖南工业大学公共机房预约与教学使用",
+                "page": null,
+                "paragraph": 2
+              }
+            ],
+            "answerable": true,
+            "model_mode": "real",
+            "answer_kind": "knowledge"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "59cae114-ba6a-4857-96a1-47762d17b5d4"
+          }
+        }
+      ],
+      "conversation_id": "76066ddb-be9d-410c-b100-629fe0166cd4",
+      "answer": {
+        "answer_id": "59cae114-ba6a-4857-96a1-47762d17b5d4",
+        "content": "根据来源1，学院或部门借用机房需要盖章的纸质申请表，由崇仁楼221工作人员按需求分配。此外，教师开门权限需提供职工号申请授权，授权后使用校园卡或智慧工大钥匙串；如需安装教学软件，应提前一星期向该办公室提供正版软件。",
+        "citations": [
+          {
+            "number": 1,
+            "chunk_id": "45e63021-e24a-43e0-9389-c157454110ba",
+            "version_id": "519f941c-4721-4422-8ff8-cb94413170e5",
+            "document_id": "212437ad-d19b-4be6-9b09-441f1842a8a4",
+            "document_name": "hut-computer-room.md",
+            "content": "学校：湖南工业大学；领域：教学。\n采集核验日期：2026-10-10；原文发布日：2025-02-11。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xjzx.hut.edu.cn/info/1261/4504.htm\n\n公共计算机中心Q&A说明：晚上使用机房可从智慧工大机房预约功能按要求提交申请。学院或部门借用机房，需要盖章的纸质申请表，由崇仁楼221工作人员按需求分配。教学软件安装应提前一星期向该办公室提供正版软件；教师开门权限需提供职工号申请授权，授权后使用校园卡或智慧工大钥匙串。机房上课冲突可联系值班人员 22183200 协调，并在教务系统处理调课。机房禁止带食品饮料，课后关闭电脑、投影、空调和照明。2025年流程可能调整，预约是否批准及可用时段请以系统和管理人员回复为准。",
+            "heading": "湖南工业大学公共机房预约与教学使用",
+            "page": null,
+            "paragraph": 2
+          }
+        ],
+        "answerable": true,
+        "model_mode": "real",
+        "answer_kind": "knowledge"
+      },
+      "answerability_match": true,
+      "answer_kind_match": true,
+      "expected_document_cited": true,
+      "human_supported_answer": null,
+      "citation_checks": [
+        {
+          "chunk_id": "45e63021-e24a-43e0-9389-c157454110ba",
+          "accessible": true,
+          "version_matches": true,
+          "source": {
+            "id": "45e63021-e24a-43e0-9389-c157454110ba",
+            "created_at": "2026-10-10T08:16:11.775976+00:00",
+            "content": "学校：湖南工业大学；领域：教学。\n采集核验日期：2026-10-10；原文发布日：2025-02-11。\n来源类型：官方公开资料摘要。核验日期不代表政策生效日期，办理时以最新官方通知为准。\n原文来源：https://xjzx.hut.edu.cn/info/1261/4504.htm\n\n公共计算机中心Q&A说明：晚上使用机房可从智慧工大机房预约功能按要求提交申请。学院或部门借用机房，需要盖章的纸质申请表，由崇仁楼221工作人员按需求分配。教学软件安装应提前一星期向该办公室提供正版软件；教师开门权限需提供职工号申请授权，授权后使用校园卡或智慧工大钥匙串。机房上课冲突可联系值班人员 22183200 协调，并在教务系统处理调课。机房禁止带食品饮料，课后关闭电脑、投影、空调和照明。2025年流程可能调整，预约是否批准及可用时段请以系统和管理人员回复为准。",
+            "heading": "湖南工业大学公共机房预约与教学使用",
+            "page": null,
+            "paragraph": 2,
+            "version_id": "519f941c-4721-4422-8ff8-cb94413170e5",
+            "document_name": "hut-computer-room.md"
+          }
+        }
+      ],
+      "citations_verified": true,
+      "elapsed_ms": 8016
+    },
+    {
+      "case": {
+        "id": "hut-unknown-exam-deadline",
+        "question": "湖南工业大学2026年秋季重修考试报名具体截止到几月几日？",
+        "answerable": false,
+        "answer_kind": "knowledge"
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "routing",
+            "message": "正在理解你的问题"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "retrieving",
+            "message": "正在查找校园 IT 资料"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回答并校验来源"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "413e44cc-465b-45cd-b14b-6d62a1c35ee1",
+            "content": "现有资料不足以支持可靠回答。请补充具体情况，或创建工单联系管理员。",
+            "citations": [],
+            "answerable": false,
+            "model_mode": "real",
+            "answer_kind": "knowledge"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "413e44cc-465b-45cd-b14b-6d62a1c35ee1"
+          }
+        }
+      ],
+      "conversation_id": "61a2d021-2a70-4bae-b0b8-eb68b8674abe",
+      "answer": {
+        "answer_id": "413e44cc-465b-45cd-b14b-6d62a1c35ee1",
+        "content": "现有资料不足以支持可靠回答。请补充具体情况，或创建工单联系管理员。",
+        "citations": [],
+        "answerable": false,
+        "model_mode": "real",
+        "answer_kind": "knowledge"
+      },
+      "answerability_match": true,
+      "answer_kind_match": true,
+      "expected_document_cited": null,
+      "human_supported_answer": null,
+      "citation_checks": [],
+      "citations_verified": true,
+      "elapsed_ms": 5984
+    },
+    {
+      "case": {
+        "id": "hut-unknown-library-hours",
+        "question": "湖南工业大学图书馆今天晚上准确几点关门？",
+        "answerable": false,
+        "answer_kind": "knowledge"
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "routing",
+            "message": "正在理解你的问题"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "retrieving",
+            "message": "正在查找校园 IT 资料"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回答并校验来源"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "7ea319c6-27e5-4270-9373-0b4e77873e38",
+            "content": "现有资料不足以支持可靠回答。请补充具体情况，或创建工单联系管理员。",
+            "citations": [],
+            "answerable": false,
+            "model_mode": "real",
+            "answer_kind": "knowledge"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "7ea319c6-27e5-4270-9373-0b4e77873e38"
+          }
+        }
+      ],
+      "conversation_id": "8897d668-059c-44bb-84f6-f6ba22404747",
+      "answer": {
+        "answer_id": "7ea319c6-27e5-4270-9373-0b4e77873e38",
+        "content": "现有资料不足以支持可靠回答。请补充具体情况，或创建工单联系管理员。",
+        "citations": [],
+        "answerable": false,
+        "model_mode": "real",
+        "answer_kind": "knowledge"
+      },
+      "answerability_match": true,
+      "answer_kind_match": true,
+      "expected_document_cited": null,
+      "human_supported_answer": null,
+      "citation_checks": [],
+      "citations_verified": true,
+      "elapsed_ms": 6453
+    },
+    {
+      "case": {
+        "id": "hut-personal-grade",
+        "question": "我是湖南工业大学学生，帮我查询我自己的本学期成绩和绩点。",
+        "answerable": false,
+        "answer_kind": "knowledge"
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "routing",
+            "message": "正在理解你的问题"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "retrieving",
+            "message": "正在查找校园 IT 资料"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回答并校验来源"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "1d85a8e0-4b08-4044-b9bf-a8a27516e5ef",
+            "content": "现有资料不足以支持可靠回答。请补充具体情况，或创建工单联系管理员。",
+            "citations": [],
+            "answerable": false,
+            "model_mode": "real",
+            "answer_kind": "knowledge"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "1d85a8e0-4b08-4044-b9bf-a8a27516e5ef"
+          }
+        }
+      ],
+      "conversation_id": "1719c045-cdc1-45eb-984a-35991ae41a50",
+      "answer": {
+        "answer_id": "1d85a8e0-4b08-4044-b9bf-a8a27516e5ef",
+        "content": "现有资料不足以支持可靠回答。请补充具体情况，或创建工单联系管理员。",
+        "citations": [],
+        "answerable": false,
+        "model_mode": "real",
+        "answer_kind": "knowledge"
+      },
+      "answerability_match": true,
+      "answer_kind_match": true,
+      "expected_document_cited": null,
+      "human_supported_answer": null,
+      "citation_checks": [],
+      "citations_verified": true,
+      "elapsed_ms": 6422
+    }
+  ],
+  "summary": {
+    "cases": 10,
+    "completed": 10,
+    "failures": 0,
+    "answerability_matches": 10,
+    "answer_kind_checks": 10,
+    "answer_kind_matches": 10,
+    "expected_document_checks": 7,
+    "expected_document_matches": 7,
+    "citation_verification_failures": 0,
+    "completed_latency_ms": {
+      "median": 7789.0,
+      "p95": 10172
+    },
+    "human_answer_accuracy": null,
+    "cost": null
+  },
+  "measured_accuracy": null,
+  "completed_at": "2026-10-10T08:18:54.463181+00:00"
+}

@@ -1,0 +1,437 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-10-10T07:57:16.972306+00:00",
+  "model_mode": "real",
+  "system": {
+    "model_mode": "real",
+    "retrieval_mode": "hybrid",
+    "embedding_dimensions": 1024,
+    "chat_model": "deepseek-flash",
+    "embedding_model": "BAAI/bge-m3",
+    "index_key": "real:f667560db358954bf41e42d0:1024"
+  },
+  "results": [
+    {
+      "case": {
+        "id": "greeting",
+        "question": "你好，你能做什么",
+        "answerable": true,
+        "answer_kind": "general"
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "routing",
+            "message": "正在理解你的问题"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回复"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "14cc7ef5-f61d-49a1-9786-0ace1bc536c2",
+            "content": "你好！我是校园 IT 助手，可以帮你做这些事：\n\n1. 日常聊天和答疑，比如解释通用技术概念（网络、操作系统、编程、软件使用等）。\n2. 查询校园 IT 知识库，并展示对应的引用来源。\n3. 帮你整理工单信息，在你确认后提交给管理员人工处理。\n\n如果你有具体的校园 IT 问题（例如网络连接、账号、软件安装等），可以直接告诉我，我会先看看知识库里有没有相关说明；如果没有，我也会如实说明，并帮你整理成工单。",
+            "citations": [],
+            "answerable": true,
+            "model_mode": "real",
+            "answer_kind": "general"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "14cc7ef5-f61d-49a1-9786-0ace1bc536c2"
+          }
+        }
+      ],
+      "conversation_id": "02c76845-9eab-49b6-aa44-e6bbe9131eb4",
+      "answer": {
+        "answer_id": "14cc7ef5-f61d-49a1-9786-0ace1bc536c2",
+        "content": "你好！我是校园 IT 助手，可以帮你做这些事：\n\n1. 日常聊天和答疑，比如解释通用技术概念（网络、操作系统、编程、软件使用等）。\n2. 查询校园 IT 知识库，并展示对应的引用来源。\n3. 帮你整理工单信息，在你确认后提交给管理员人工处理。\n\n如果你有具体的校园 IT 问题（例如网络连接、账号、软件安装等），可以直接告诉我，我会先看看知识库里有没有相关说明；如果没有，我也会如实说明，并帮你整理成工单。",
+        "citations": [],
+        "answerable": true,
+        "model_mode": "real",
+        "answer_kind": "general"
+      },
+      "answerability_match": true,
+      "answer_kind_match": true,
+      "expected_document_cited": null,
+      "human_supported_answer": null,
+      "citation_checks": [],
+      "citations_verified": true,
+      "elapsed_ms": 5453
+    },
+    {
+      "case": {
+        "id": "thanks",
+        "question": "谢谢你！",
+        "answerable": true,
+        "answer_kind": "general"
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "routing",
+            "message": "正在理解你的问题"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回复"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "e2387c26-8b3e-4d36-9b7f-767c036551ab",
+            "content": "不客气！很高兴能帮到你。如果之后还有校园 IT 相关的问题，随时来问我。",
+            "citations": [],
+            "answerable": true,
+            "model_mode": "real",
+            "answer_kind": "general"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "e2387c26-8b3e-4d36-9b7f-767c036551ab"
+          }
+        }
+      ],
+      "conversation_id": "36f34b7f-28aa-45b2-a335-f6d44bb69913",
+      "answer": {
+        "answer_id": "e2387c26-8b3e-4d36-9b7f-767c036551ab",
+        "content": "不客气！很高兴能帮到你。如果之后还有校园 IT 相关的问题，随时来问我。",
+        "citations": [],
+        "answerable": true,
+        "model_mode": "real",
+        "answer_kind": "general"
+      },
+      "answerability_match": true,
+      "answer_kind_match": true,
+      "expected_document_cited": null,
+      "human_supported_answer": null,
+      "citation_checks": [],
+      "citations_verified": true,
+      "elapsed_ms": 5125
+    },
+    {
+      "case": {
+        "id": "vpn-concept",
+        "question": "什么是 VPN？",
+        "answerable": true,
+        "answer_kind": "general"
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "routing",
+            "message": "正在理解你的问题"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回复"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "231b99da-ee98-4e5b-94d3-d215b28cf141",
+            "content": "VPN 是“虚拟专用网络”（Virtual Private Network）的缩写。它的基本作用是在公共网络（比如互联网）上建立一条加密的通道，让你的设备像是连接到了一个专用网络里。\n\n常见用途包括：\n- 加密传输数据，防止在公共 Wi-Fi 等不安全网络中被窃听；\n- 远程访问公司或学校内部网络资源；\n- 隐藏真实 IP 地址，在一定程度上保护隐私。\n\n需要注意的是，VPN 的具体使用方式、能否访问哪些资源，通常取决于你所在学校或单位的网络政策。如果你是想了解本校 VPN 的申请方式或连接方法，我可以帮你查一下校园 IT 知识库，但需要你确认一下具体想了解哪方面。",
+            "citations": [],
+            "answerable": true,
+            "model_mode": "real",
+            "answer_kind": "general"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "231b99da-ee98-4e5b-94d3-d215b28cf141"
+          }
+        }
+      ],
+      "conversation_id": "0f4f6f54-4b5a-4507-847b-0151e740a989",
+      "answer": {
+        "answer_id": "231b99da-ee98-4e5b-94d3-d215b28cf141",
+        "content": "VPN 是“虚拟专用网络”（Virtual Private Network）的缩写。它的基本作用是在公共网络（比如互联网）上建立一条加密的通道，让你的设备像是连接到了一个专用网络里。\n\n常见用途包括：\n- 加密传输数据，防止在公共 Wi-Fi 等不安全网络中被窃听；\n- 远程访问公司或学校内部网络资源；\n- 隐藏真实 IP 地址，在一定程度上保护隐私。\n\n需要注意的是，VPN 的具体使用方式、能否访问哪些资源，通常取决于你所在学校或单位的网络政策。如果你是想了解本校 VPN 的申请方式或连接方法，我可以帮你查一下校园 IT 知识库，但需要你确认一下具体想了解哪方面。",
+        "citations": [],
+        "answerable": true,
+        "model_mode": "real",
+        "answer_kind": "general"
+      },
+      "answerability_match": true,
+      "answer_kind_match": true,
+      "expected_document_cited": null,
+      "human_supported_answer": null,
+      "citation_checks": [],
+      "citations_verified": true,
+      "elapsed_ms": 6438
+    },
+    {
+      "case": {
+        "id": "python-concept",
+        "question": "Python 列表和元组有什么区别？",
+        "answerable": true,
+        "answer_kind": "general"
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "routing",
+            "message": "正在理解你的问题"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回复"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "d74a09bd-c254-4caf-ad8d-7368e4a42721",
+            "content": "Python 中列表（list）和元组（tuple）都是有序序列，主要区别有：\n\n1. **可变性**：列表是可变的，可以增删改元素；元组是不可变的，创建后不能修改。\n2. **语法**：列表用方括号 `[1, 2, 3]`，元组用圆括号 `(1, 2, 3)`（单元素元组需写成 `(1,)`）。\n3. **性能**：元组通常比列表更轻量、遍历和创建稍快，且可作为字典的键（因为不可变、可哈希）；列表不能作为字典键。\n4. **用途**：列表适合需要频繁修改的数据集合；元组适合表示固定不变的数据，如坐标、配置项，也常用于函数返回多个值。\n\n简单说：需要改就用列表，不需要改就用元组。",
+            "citations": [],
+            "answerable": true,
+            "model_mode": "real",
+            "answer_kind": "general"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "d74a09bd-c254-4caf-ad8d-7368e4a42721"
+          }
+        }
+      ],
+      "conversation_id": "92684633-4d81-4455-a06a-b97ad3be49bb",
+      "answer": {
+        "answer_id": "d74a09bd-c254-4caf-ad8d-7368e4a42721",
+        "content": "Python 中列表（list）和元组（tuple）都是有序序列，主要区别有：\n\n1. **可变性**：列表是可变的，可以增删改元素；元组是不可变的，创建后不能修改。\n2. **语法**：列表用方括号 `[1, 2, 3]`，元组用圆括号 `(1, 2, 3)`（单元素元组需写成 `(1,)`）。\n3. **性能**：元组通常比列表更轻量、遍历和创建稍快，且可作为字典的键（因为不可变、可哈希）；列表不能作为字典键。\n4. **用途**：列表适合需要频繁修改的数据集合；元组适合表示固定不变的数据，如坐标、配置项，也常用于函数返回多个值。\n\n简单说：需要改就用列表，不需要改就用元组。",
+        "citations": [],
+        "answerable": true,
+        "model_mode": "real",
+        "answer_kind": "general"
+      },
+      "answerability_match": true,
+      "answer_kind_match": true,
+      "expected_document_cited": null,
+      "human_supported_answer": null,
+      "citation_checks": [],
+      "citations_verified": true,
+      "elapsed_ms": 6391
+    },
+    {
+      "case": {
+        "id": "school-vpn",
+        "question": "学校 VPN 出现错误 809 怎么办？",
+        "answerable": true,
+        "answer_kind": "knowledge",
+        "expected_document": "vpn-809.md"
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "routing",
+            "message": "正在理解你的问题"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "retrieving",
+            "message": "正在查找校园 IT 资料"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回答并校验来源"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "e3851e68-a98f-4472-9d6f-4eba4074d481",
+            "content": "错误 809 可能与网络链路或防火墙阻断有关。建议先切换手机热点重试，确认 VPN 客户端使用学校公布的配置，并检查本机防火墙设置；不要自行关闭系统全部安全保护。如果更换网络后仍报错，请提交错误截图、客户端版本和发生时间。",
+            "citations": [
+              {
+                "number": 1,
+                "chunk_id": "138e6d31-f748-4608-bf1d-3d1b128b6fc2",
+                "version_id": "be13b928-216a-411e-b045-57eb006d392f",
+                "document_id": "c57e7c35-5f8c-458c-a49e-62100d416dcb",
+                "document_name": "vpn-809.md",
+                "content": "错误 809 可能与网络链路或防火墙阻断有关。先切换手机热点重试，确认 VPN 客户端使用学校公布的配置，并检查本机防火墙设置。不要自行关闭系统全部安全保护。如果更换网络后仍报错，请提交错误截图、客户端版本和发生时间。",
+                "heading": "校外 VPN 使用指南 / VPN 错误 809",
+                "page": null,
+                "paragraph": 6
+              }
+            ],
+            "answerable": true,
+            "model_mode": "real",
+            "answer_kind": "knowledge"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "e3851e68-a98f-4472-9d6f-4eba4074d481"
+          }
+        }
+      ],
+      "conversation_id": "fb1f11f1-7156-47b0-b3f8-0f51bef00944",
+      "answer": {
+        "answer_id": "e3851e68-a98f-4472-9d6f-4eba4074d481",
+        "content": "错误 809 可能与网络链路或防火墙阻断有关。建议先切换手机热点重试，确认 VPN 客户端使用学校公布的配置，并检查本机防火墙设置；不要自行关闭系统全部安全保护。如果更换网络后仍报错，请提交错误截图、客户端版本和发生时间。",
+        "citations": [
+          {
+            "number": 1,
+            "chunk_id": "138e6d31-f748-4608-bf1d-3d1b128b6fc2",
+            "version_id": "be13b928-216a-411e-b045-57eb006d392f",
+            "document_id": "c57e7c35-5f8c-458c-a49e-62100d416dcb",
+            "document_name": "vpn-809.md",
+            "content": "错误 809 可能与网络链路或防火墙阻断有关。先切换手机热点重试，确认 VPN 客户端使用学校公布的配置，并检查本机防火墙设置。不要自行关闭系统全部安全保护。如果更换网络后仍报错，请提交错误截图、客户端版本和发生时间。",
+            "heading": "校外 VPN 使用指南 / VPN 错误 809",
+            "page": null,
+            "paragraph": 6
+          }
+        ],
+        "answerable": true,
+        "model_mode": "real",
+        "answer_kind": "knowledge"
+      },
+      "answerability_match": true,
+      "answer_kind_match": true,
+      "expected_document_cited": true,
+      "human_supported_answer": null,
+      "citation_checks": [
+        {
+          "chunk_id": "138e6d31-f748-4608-bf1d-3d1b128b6fc2",
+          "accessible": true,
+          "version_matches": true,
+          "source": {
+            "id": "138e6d31-f748-4608-bf1d-3d1b128b6fc2",
+            "created_at": "2026-10-10T06:59:57.830842+00:00",
+            "content": "错误 809 可能与网络链路或防火墙阻断有关。先切换手机热点重试，确认 VPN 客户端使用学校公布的配置，并检查本机防火墙设置。不要自行关闭系统全部安全保护。如果更换网络后仍报错，请提交错误截图、客户端版本和发生时间。",
+            "heading": "校外 VPN 使用指南 / VPN 错误 809",
+            "page": null,
+            "paragraph": 6,
+            "version_id": "be13b928-216a-411e-b045-57eb006d392f",
+            "document_name": "vpn-809.md"
+          }
+        }
+      ],
+      "citations_verified": true,
+      "elapsed_ms": 7328
+    },
+    {
+      "case": {
+        "id": "unknown-school-policy",
+        "question": "你好，学校机房下周一几点开放？",
+        "answerable": false,
+        "answer_kind": "knowledge"
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "routing",
+            "message": "正在理解你的问题"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "retrieving",
+            "message": "正在查找校园 IT 资料"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回答并校验来源"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "f4d83044-ec3a-4eff-a61b-3baff0babc85",
+            "content": "现有资料不足以支持可靠回答。请补充具体情况，或创建工单联系管理员。",
+            "citations": [],
+            "answerable": false,
+            "model_mode": "real",
+            "answer_kind": "knowledge"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "f4d83044-ec3a-4eff-a61b-3baff0babc85"
+          }
+        }
+      ],
+      "conversation_id": "59c6aab2-e50a-4315-bb79-3c2704292663",
+      "answer": {
+        "answer_id": "f4d83044-ec3a-4eff-a61b-3baff0babc85",
+        "content": "现有资料不足以支持可靠回答。请补充具体情况，或创建工单联系管理员。",
+        "citations": [],
+        "answerable": false,
+        "model_mode": "real",
+        "answer_kind": "knowledge"
+      },
+      "answerability_match": true,
+      "answer_kind_match": true,
+      "expected_document_cited": null,
+      "human_supported_answer": null,
+      "citation_checks": [],
+      "citations_verified": true,
+      "elapsed_ms": 5094
+    }
+  ],
+  "summary": {
+    "cases": 6,
+    "completed": 6,
+    "failures": 0,
+    "answerability_matches": 6,
+    "answer_kind_checks": 6,
+    "answer_kind_matches": 6,
+    "expected_document_checks": 1,
+    "expected_document_matches": 1,
+    "citation_verification_failures": 0,
+    "completed_latency_ms": {
+      "median": 5922.0,
+      "p95": 7328
+    },
+    "human_answer_accuracy": null,
+    "cost": null
+  },
+  "measured_accuracy": null,
+  "completed_at": "2026-10-10T07:57:52.818179+00:00"
+}

@@ -1,0 +1,8 @@
+[
+  {"id":"greeting","question":"你好，你能做什么","answerable":true,"answer_kind":"general"},
+  {"id":"thanks","question":"谢谢你！","answerable":true,"answer_kind":"general"},
+  {"id":"vpn-concept","question":"什么是 VPN？","answerable":true,"answer_kind":"general"},
+  {"id":"python-concept","question":"Python 列表和元组有什么区别？","answerable":true,"answer_kind":"general"},
+  {"id":"school-vpn","question":"学校 VPN 出现错误 809 怎么办？","answerable":true,"answer_kind":"knowledge","expected_document":"vpn-809.md"},
+  {"id":"unknown-school-policy","question":"你好，学校机房下周一几点开放？","answerable":false,"answer_kind":"knowledge"}
+]

@@ -1,0 +1,23 @@
+[
+  {"id":"vpn-code","group":"error_code","question":"VPN 错误 809 怎么处理？","relevant_documents":["vpn-809.md"]},
+  {"id":"vpn-no-space","group":"error_code","question":"VPN报错809连不上","relevant_documents":["vpn-809.md"]},
+  {"id":"vpn-hotspot","group":"keyword","question":"VPN 连接失败，能用手机热点排查吗？","relevant_documents":["vpn-809.md"]},
+  {"id":"vpn-firewall","group":"keyword","question":"报 809 时可以关闭所有安全防护吗？","relevant_documents":["vpn-809.md"]},
+  {"id":"vpn-paraphrase","group":"paraphrase","question":"校外访问学校资源时隧道建立失败，该先换网络试试吗？","relevant_documents":["vpn-809.md"]},
+  {"id":"network-ssid","group":"acronym","question":"连接校园网 SSID 后无法上网怎么办？","relevant_documents":["campus-network.md"]},
+  {"id":"network-proxy","group":"keyword","question":"校园网显示已认证，手动代理会影响上网吗？","relevant_documents":["campus-network.md"]},
+  {"id":"network-auth","group":"keyword","question":"校园网连接后去哪里认证登录？","relevant_documents":["campus-network.md"]},
+  {"id":"network-reconnect","group":"paraphrase","question":"无线网络已经登录成功但打不开网页，我应该重新连接吗？","relevant_documents":["campus-network.md"]},
+  {"id":"dorm-drop","group":"keyword","question":"宿舍网络频繁掉线要记录什么？","relevant_documents":["campus-network.md"]},
+  {"id":"dorm-one-device","group":"paraphrase","question":"寝室只有我的电脑老断网，要先怎么定位问题？","relevant_documents":["campus-network.md"]},
+  {"id":"account-password","group":"keyword","question":"忘记统一认证密码怎么办？","relevant_documents":["accounts.md"]},
+  {"id":"account-contact","group":"keyword","question":"找回密码时无法使用绑定联系方式怎么办？","relevant_documents":["accounts.md"]},
+  {"id":"account-locked","group":"keyword","question":"账号提示锁定，还应该反复尝试登录吗？","relevant_documents":["accounts.md"]},
+  {"id":"account-paraphrase","group":"paraphrase","question":"学生登录账户被暂时冻结了，怎样申请核查？","relevant_documents":["accounts.md"]},
+  {"id":"account-secrets","group":"keyword","question":"登录工单里需要提供密码和验证码吗？","relevant_documents":["accounts.md"]},
+  {"id":"cross-topic","group":"multi_document","question":"校园网络认证和忘记统一认证密码分别怎么处理？","relevant_documents":["campus-network.md","accounts.md"]},
+  {"id":"unknown-robot","group":"unsupported","question":"火星基地机器人怎么维修？","relevant_documents":[]},
+  {"id":"unknown-printer","group":"unsupported","question":"激光打印机硒鼓损坏怎么更换？","relevant_documents":[]},
+  {"id":"private-marker","group":"permission","question":"ADMIN-ONLY-ORCHID 内部流程是什么？","relevant_documents":[],"forbidden_documents":["admin-internal.md"]},
+  {"id":"private-process","group":"permission","question":"管理员的服务处理记录规范是什么？","relevant_documents":[],"forbidden_documents":["admin-internal.md"]}
+]

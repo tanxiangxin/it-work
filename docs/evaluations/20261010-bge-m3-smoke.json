@@ -1,0 +1,425 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-10-10T07:00:24.513250+00:00",
+  "model_mode": "real",
+  "system": {
+    "model_mode": "real",
+    "retrieval_mode": "hybrid",
+    "embedding_dimensions": 1024,
+    "chat_model": "deepseek-flash",
+    "embedding_model": "BAAI/bge-m3",
+    "index_key": "real:f667560db358954bf41e42d0:1024"
+  },
+  "results": [
+    {
+      "case": {
+        "id": "vpn-809",
+        "question": "VPN 错误 809 怎么处理？",
+        "expected_document": "vpn-809.md",
+        "answerable": true
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "retrieving",
+            "message": "正在查找校园 IT 资料"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回答并校验来源"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "487d8e66-ef26-455b-b7af-114c0a46cde9",
+            "content": "错误 809 可能与网络链路或防火墙阻断有关。可先切换手机热点重试，确认 VPN 客户端使用学校公布的配置，并检查本机防火墙设置；不要自行关闭系统全部安全保护。如果更换网络后仍报错，请提交错误截图、客户端版本和发生时间。",
+            "citations": [
+              {
+                "number": 1,
+                "chunk_id": "138e6d31-f748-4608-bf1d-3d1b128b6fc2",
+                "version_id": "be13b928-216a-411e-b045-57eb006d392f",
+                "document_id": "c57e7c35-5f8c-458c-a49e-62100d416dcb",
+                "document_name": "vpn-809.md",
+                "content": "错误 809 可能与网络链路或防火墙阻断有关。先切换手机热点重试，确认 VPN 客户端使用学校公布的配置，并检查本机防火墙设置。不要自行关闭系统全部安全保护。如果更换网络后仍报错，请提交错误截图、客户端版本和发生时间。",
+                "heading": "校外 VPN 使用指南 / VPN 错误 809",
+                "page": null,
+                "paragraph": 6
+              }
+            ],
+            "answerable": true,
+            "model_mode": "real"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "487d8e66-ef26-455b-b7af-114c0a46cde9"
+          }
+        }
+      ],
+      "conversation_id": "740cd857-e653-4f5f-862d-0c573569d314",
+      "answer": {
+        "answer_id": "487d8e66-ef26-455b-b7af-114c0a46cde9",
+        "content": "错误 809 可能与网络链路或防火墙阻断有关。可先切换手机热点重试，确认 VPN 客户端使用学校公布的配置，并检查本机防火墙设置；不要自行关闭系统全部安全保护。如果更换网络后仍报错，请提交错误截图、客户端版本和发生时间。",
+        "citations": [
+          {
+            "number": 1,
+            "chunk_id": "138e6d31-f748-4608-bf1d-3d1b128b6fc2",
+            "version_id": "be13b928-216a-411e-b045-57eb006d392f",
+            "document_id": "c57e7c35-5f8c-458c-a49e-62100d416dcb",
+            "document_name": "vpn-809.md",
+            "content": "错误 809 可能与网络链路或防火墙阻断有关。先切换手机热点重试，确认 VPN 客户端使用学校公布的配置，并检查本机防火墙设置。不要自行关闭系统全部安全保护。如果更换网络后仍报错，请提交错误截图、客户端版本和发生时间。",
+            "heading": "校外 VPN 使用指南 / VPN 错误 809",
+            "page": null,
+            "paragraph": 6
+          }
+        ],
+        "answerable": true,
+        "model_mode": "real"
+      },
+      "answerability_match": true,
+      "expected_document_cited": true,
+      "human_supported_answer": null,
+      "citation_checks": [
+        {
+          "chunk_id": "138e6d31-f748-4608-bf1d-3d1b128b6fc2",
+          "accessible": true,
+          "version_matches": true,
+          "source": {
+            "id": "138e6d31-f748-4608-bf1d-3d1b128b6fc2",
+            "created_at": "2026-10-10T06:59:57.830842+00:00",
+            "content": "错误 809 可能与网络链路或防火墙阻断有关。先切换手机热点重试，确认 VPN 客户端使用学校公布的配置，并检查本机防火墙设置。不要自行关闭系统全部安全保护。如果更换网络后仍报错，请提交错误截图、客户端版本和发生时间。",
+            "heading": "校外 VPN 使用指南 / VPN 错误 809",
+            "page": null,
+            "paragraph": 6,
+            "version_id": "be13b928-216a-411e-b045-57eb006d392f",
+            "document_name": "vpn-809.md"
+          }
+        }
+      ],
+      "citations_verified": true,
+      "elapsed_ms": 8125
+    },
+    {
+      "case": {
+        "id": "network",
+        "question": "校园网连接后无法上网怎么办？",
+        "expected_document": "campus-network.md",
+        "answerable": true
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "retrieving",
+            "message": "正在查找校园 IT 资料"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回答并校验来源"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "e5c8738a-d8ca-4a27-a0d8-6b85b96f5b55",
+            "content": "校园网连接后无法上网，可按以下步骤排查：1. 确认连接的是校园网 SSID，并关闭其他 VPN；2. 打开浏览器访问校园认证页面，使用统一认证账号登录；3. 如果显示已认证但仍无法上网，断开 Wi-Fi 后重新连接，并检查设备是否设置了手动代理；4. 保存错误提示、发生时间和所在地点；若仍失败，请创建校园网络工单。",
+            "citations": [
+              {
+                "number": 1,
+                "chunk_id": "e4472b60-801a-4994-ad90-ea655bfa8367",
+                "version_id": "f2b9a6ea-fa1f-4e24-a167-303e8d573353",
+                "document_id": "e7679332-705f-4b8a-a663-7784614b3dec",
+                "document_name": "campus-network.md",
+                "content": "1. 确认连接的是校园网 SSID，并关闭其他 VPN。\n2. 打开浏览器访问校园认证页面，使用统一认证账号登录。\n3. 如果显示已认证但仍无法上网，断开 Wi-Fi 后重新连接，并检查设备是否设置了手动代理。\n4. 保存错误提示、发生时间和所在地点；若仍失败，请创建校园网络工单。",
+                "heading": "校园网连接与认证 / 连接后无法上网",
+                "page": null,
+                "paragraph": 6
+              }
+            ],
+            "answerable": true,
+            "model_mode": "real"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "e5c8738a-d8ca-4a27-a0d8-6b85b96f5b55"
+          }
+        }
+      ],
+      "conversation_id": "a3e4ccc7-32f5-4d34-bb33-efca9b2442fb",
+      "answer": {
+        "answer_id": "e5c8738a-d8ca-4a27-a0d8-6b85b96f5b55",
+        "content": "校园网连接后无法上网，可按以下步骤排查：1. 确认连接的是校园网 SSID，并关闭其他 VPN；2. 打开浏览器访问校园认证页面，使用统一认证账号登录；3. 如果显示已认证但仍无法上网，断开 Wi-Fi 后重新连接，并检查设备是否设置了手动代理；4. 保存错误提示、发生时间和所在地点；若仍失败，请创建校园网络工单。",
+        "citations": [
+          {
+            "number": 1,
+            "chunk_id": "e4472b60-801a-4994-ad90-ea655bfa8367",
+            "version_id": "f2b9a6ea-fa1f-4e24-a167-303e8d573353",
+            "document_id": "e7679332-705f-4b8a-a663-7784614b3dec",
+            "document_name": "campus-network.md",
+            "content": "1. 确认连接的是校园网 SSID，并关闭其他 VPN。\n2. 打开浏览器访问校园认证页面，使用统一认证账号登录。\n3. 如果显示已认证但仍无法上网，断开 Wi-Fi 后重新连接，并检查设备是否设置了手动代理。\n4. 保存错误提示、发生时间和所在地点；若仍失败，请创建校园网络工单。",
+            "heading": "校园网连接与认证 / 连接后无法上网",
+            "page": null,
+            "paragraph": 6
+          }
+        ],
+        "answerable": true,
+        "model_mode": "real"
+      },
+      "answerability_match": true,
+      "expected_document_cited": true,
+      "human_supported_answer": null,
+      "citation_checks": [
+        {
+          "chunk_id": "e4472b60-801a-4994-ad90-ea655bfa8367",
+          "accessible": true,
+          "version_matches": true,
+          "source": {
+            "id": "e4472b60-801a-4994-ad90-ea655bfa8367",
+            "created_at": "2026-10-10T06:59:56.993779+00:00",
+            "content": "1. 确认连接的是校园网 SSID，并关闭其他 VPN。\n2. 打开浏览器访问校园认证页面，使用统一认证账号登录。\n3. 如果显示已认证但仍无法上网，断开 Wi-Fi 后重新连接，并检查设备是否设置了手动代理。\n4. 保存错误提示、发生时间和所在地点；若仍失败，请创建校园网络工单。",
+            "heading": "校园网连接与认证 / 连接后无法上网",
+            "page": null,
+            "paragraph": 6,
+            "version_id": "f2b9a6ea-fa1f-4e24-a167-303e8d573353",
+            "document_name": "campus-network.md"
+          }
+        }
+      ],
+      "citations_verified": true,
+      "elapsed_ms": 7375
+    },
+    {
+      "case": {
+        "id": "account",
+        "question": "忘记统一认证密码怎么办？",
+        "expected_document": "accounts.md",
+        "answerable": true
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "retrieving",
+            "message": "正在查找校园 IT 资料"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回答并校验来源"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "412731bd-1e9e-40ab-ac58-c7ad9ce0f749",
+            "content": "在统一认证页面选择“忘记密码”，通过已绑定的联系方式验证后设置新密码。若无法访问绑定联系方式，请提交账号登录工单，由管理员核实身份后协助处理。注意不要在问题描述中提供密码或验证码。",
+            "citations": [
+              {
+                "number": 1,
+                "chunk_id": "fbd10191-2413-4f75-9d6c-4ba3c2993867",
+                "version_id": "54ba9ad4-c739-43c3-ab2e-f194a443f6ac",
+                "document_id": "1cedaefb-6f95-4649-8406-e8bc3d863e24",
+                "document_name": "accounts.md",
+                "content": "在统一认证页面选择“忘记密码”，通过已绑定的联系方式验证后设置新密码。若无法访问绑定联系方式，请提交账号登录工单，由管理员核实身份后协助处理。不要在问题描述中提供密码或验证码。",
+                "heading": "统一认证账号 / 忘记密码",
+                "page": null,
+                "paragraph": 4
+              }
+            ],
+            "answerable": true,
+            "model_mode": "real"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "412731bd-1e9e-40ab-ac58-c7ad9ce0f749"
+          }
+        }
+      ],
+      "conversation_id": "7eb95e7e-db08-4599-b69c-3f7cbea1cb2e",
+      "answer": {
+        "answer_id": "412731bd-1e9e-40ab-ac58-c7ad9ce0f749",
+        "content": "在统一认证页面选择“忘记密码”，通过已绑定的联系方式验证后设置新密码。若无法访问绑定联系方式，请提交账号登录工单，由管理员核实身份后协助处理。注意不要在问题描述中提供密码或验证码。",
+        "citations": [
+          {
+            "number": 1,
+            "chunk_id": "fbd10191-2413-4f75-9d6c-4ba3c2993867",
+            "version_id": "54ba9ad4-c739-43c3-ab2e-f194a443f6ac",
+            "document_id": "1cedaefb-6f95-4649-8406-e8bc3d863e24",
+            "document_name": "accounts.md",
+            "content": "在统一认证页面选择“忘记密码”，通过已绑定的联系方式验证后设置新密码。若无法访问绑定联系方式，请提交账号登录工单，由管理员核实身份后协助处理。不要在问题描述中提供密码或验证码。",
+            "heading": "统一认证账号 / 忘记密码",
+            "page": null,
+            "paragraph": 4
+          }
+        ],
+        "answerable": true,
+        "model_mode": "real"
+      },
+      "answerability_match": true,
+      "expected_document_cited": true,
+      "human_supported_answer": null,
+      "citation_checks": [
+        {
+          "chunk_id": "fbd10191-2413-4f75-9d6c-4ba3c2993867",
+          "accessible": true,
+          "version_matches": true,
+          "source": {
+            "id": "fbd10191-2413-4f75-9d6c-4ba3c2993867",
+            "created_at": "2026-10-10T06:59:54.907730+00:00",
+            "content": "在统一认证页面选择“忘记密码”，通过已绑定的联系方式验证后设置新密码。若无法访问绑定联系方式，请提交账号登录工单，由管理员核实身份后协助处理。不要在问题描述中提供密码或验证码。",
+            "heading": "统一认证账号 / 忘记密码",
+            "page": null,
+            "paragraph": 4,
+            "version_id": "54ba9ad4-c739-43c3-ab2e-f194a443f6ac",
+            "document_name": "accounts.md"
+          }
+        }
+      ],
+      "citations_verified": true,
+      "elapsed_ms": 7359
+    },
+    {
+      "case": {
+        "id": "unknown",
+        "question": "火星基地机器人怎么维修？",
+        "answerable": false
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "retrieving",
+            "message": "正在查找校园 IT 资料"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回答并校验来源"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "f7ce7f59-af9e-4a49-b6ce-66526d8174f7",
+            "content": "现有资料不足以支持可靠回答。请补充具体情况，或创建工单联系管理员。",
+            "citations": [],
+            "answerable": false,
+            "model_mode": "real"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "f7ce7f59-af9e-4a49-b6ce-66526d8174f7"
+          }
+        }
+      ],
+      "conversation_id": "a3ef3841-d3d4-4af3-b8d8-001c63ee65ca",
+      "answer": {
+        "answer_id": "f7ce7f59-af9e-4a49-b6ce-66526d8174f7",
+        "content": "现有资料不足以支持可靠回答。请补充具体情况，或创建工单联系管理员。",
+        "citations": [],
+        "answerable": false,
+        "model_mode": "real"
+      },
+      "answerability_match": true,
+      "expected_document_cited": null,
+      "human_supported_answer": null,
+      "citation_checks": [],
+      "citations_verified": true,
+      "elapsed_ms": 5125
+    },
+    {
+      "case": {
+        "id": "private",
+        "question": "ADMIN-ONLY-ORCHID 内部流程是什么？",
+        "answerable": false
+      },
+      "status": "complete",
+      "events": [
+        {
+          "event": "status",
+          "data": {
+            "phase": "retrieving",
+            "message": "正在查找校园 IT 资料"
+          }
+        },
+        {
+          "event": "status",
+          "data": {
+            "phase": "generating",
+            "message": "正在整理回答并校验来源"
+          }
+        },
+        {
+          "event": "answer",
+          "data": {
+            "answer_id": "9af12505-d153-4989-ae10-490684b3fa8c",
+            "content": "现有资料不足以支持可靠回答。请补充具体情况，或创建工单联系管理员。",
+            "citations": [],
+            "answerable": false,
+            "model_mode": "real"
+          }
+        },
+        {
+          "event": "done",
+          "data": {
+            "answer_id": "9af12505-d153-4989-ae10-490684b3fa8c"
+          }
+        }
+      ],
+      "conversation_id": "4d38dc42-7924-45fd-b7f6-d62b24107b45",
+      "answer": {
+        "answer_id": "9af12505-d153-4989-ae10-490684b3fa8c",
+        "content": "现有资料不足以支持可靠回答。请补充具体情况，或创建工单联系管理员。",
+        "citations": [],
+        "answerable": false,
+        "model_mode": "real"
+      },
+      "answerability_match": true,
+      "expected_document_cited": null,
+      "human_supported_answer": null,
+      "citation_checks": [],
+      "citations_verified": true,
+      "elapsed_ms": 5406
+    }
+  ],
+  "summary": {
+    "cases": 5,
+    "completed": 5,
+    "failures": 0,
+    "answerability_matches": 5,
+    "expected_document_checks": 3,
+    "expected_document_matches": 3,
+    "citation_verification_failures": 0,
+    "completed_latency_ms": {
+      "median": 7359,
+      "p95": 8125
+    },
+    "human_answer_accuracy": null,
+    "cost": null
+  },
+  "measured_accuracy": null,
+  "completed_at": "2026-10-10T07:00:57.904222+00:00"
+}

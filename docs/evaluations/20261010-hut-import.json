@@ -1,0 +1,273 @@
+{
+  "school": "湖南工业大学",
+  "checked_on": "2026-10-10",
+  "started_at": "2026-10-10T08:15:07.826116+00:00",
+  "documents": [
+    {
+      "file": "hut-official-entries.md",
+      "sources": [
+        "https://www.hut.edu.cn/cyzd/xs.htm",
+        "https://xjzx.hut.edu.cn/info/1261/4334.htm"
+      ],
+      "sha256": "920776138ed25242ec13d201b9d0ba800707da6b06248c5dcb2f253f2877263b",
+      "status": "ready",
+      "document_id": "dcde5f46-e876-49b2-81db-920150b85da8",
+      "job_id": "9b12b443-992d-4d46-813f-3946ab0821f7",
+      "version_id": "6123508a-cc66-4d36-b4a2-e922ae3de080",
+      "error": null,
+      "chunks": 1
+    },
+    {
+      "file": "hut-teaching-contacts.md",
+      "sources": [
+        "https://jwc.hut.edu.cn/bmgk/ksszygzzz.htm",
+        "https://jwc.hut.edu.cn/bslc.htm"
+      ],
+      "sha256": "265329c9d236ad52bf9fa59da7001c01136afa40793e769c6e83717ee129664a",
+      "status": "ready",
+      "document_id": "2364c9a6-5a37-4d64-9faa-93cb43b6b619",
+      "job_id": "93f09743-45b9-45be-93c8-0faedf509086",
+      "version_id": "2af33ecf-f6a5-4eda-86bc-6df076cdee27",
+      "error": null,
+      "chunks": 1
+    },
+    {
+      "file": "hut-teaching-notices-2026.md",
+      "sources": [
+        "https://jwc.hut.edu.cn/info/1067/17938.htm",
+        "https://jwc.hut.edu.cn/info/1067/17948.htm",
+        "https://jwc.hut.edu.cn/info/1077/17958.htm"
+      ],
+      "sha256": "2fed624d9d907ca6dba985840d3fec9964ff8fefa79b8428265616de8e77ceda",
+      "status": "ready",
+      "document_id": "55549009-af01-4715-aad0-f5ce4f11562b",
+      "job_id": "05e73376-5f17-4507-aa8c-91c3cf64b0b4",
+      "version_id": "2212cb61-2950-4a9e-bbd4-74b7db3abe67",
+      "error": null,
+      "chunks": 1
+    },
+    {
+      "file": "hut-graduation-certificate-history.md",
+      "sources": [
+        "https://jwc.hut.edu.cn/info/1014/2614.htm"
+      ],
+      "sha256": "104e788bc998a685bea2435bbce8c7594e822a1d034021fb95ca6f627dda0434",
+      "status": "ready",
+      "document_id": "476a463d-d566-4a70-b343-c5dbd7067194",
+      "job_id": "e7fcf86b-62fe-4730-98d3-0e4c3220e2fe",
+      "version_id": "432f203e-09ed-463d-a2a2-21bb96db06fc",
+      "error": null,
+      "chunks": 1
+    },
+    {
+      "file": "hut-campus-card.md",
+      "sources": [
+        "https://xjzx.hut.edu.cn/info/1261/4474.htm"
+      ],
+      "sha256": "934225e509d2970c51fd0cca8768aa796f3b8f1998ff61c5ecf473519fe3def3",
+      "status": "ready",
+      "document_id": "ae48d6e1-e3aa-40b4-8690-feda14ac3498",
+      "job_id": "cbaccf71-d308-4750-90c5-30ae37e125e1",
+      "version_id": "c6459d99-a1d0-4262-aa1d-2d9fc98d5409",
+      "error": null,
+      "chunks": 1
+    },
+    {
+      "file": "hut-dorm-electricity.md",
+      "sources": [
+        "https://xjzx.hut.edu.cn/info/1261/4474.htm",
+        "https://xjzx.hut.edu.cn/info/1371/6215.htm"
+      ],
+      "sha256": "8ba900d9133f3369a9d7850f94fb18813366542c0d7e846e24994edd63532fd4",
+      "status": "ready",
+      "document_id": "25ebcc58-ee97-47c4-bb4c-fa915236244a",
+      "job_id": "96317136-10e3-456d-9b0a-852cf2753d00",
+      "version_id": "82af9cfb-bbfc-48ef-9cfd-bffb470179f0",
+      "error": null,
+      "chunks": 1
+    },
+    {
+      "file": "hut-network-and-identity.md",
+      "sources": [
+        "https://xjzx.hut.edu.cn/info/1261/4334.htm"
+      ],
+      "sha256": "079f22f10a572367fd168a1db3c7d3704d2515f0219dc8cb524d77e96cc4bcf5",
+      "status": "ready",
+      "document_id": "0168bb3d-59f5-4d96-8178-314f8d97c5c0",
+      "job_id": "fa01ecb1-f256-4b3c-a81b-afec4cbf1a89",
+      "version_id": "04a282ff-c78c-4658-8714-1fcc377629d6",
+      "error": null,
+      "chunks": 1
+    },
+    {
+      "file": "hut-password-phone-change.md",
+      "sources": [
+        "https://xjzx.hut.edu.cn/info/1020/5685.htm"
+      ],
+      "sha256": "059aeb330dbd433d85a8820d0a2220aac95dcaf11602a596cd8b2c78406a62f9",
+      "status": "ready",
+      "document_id": "9535cbb0-615f-4a79-be14-54fac44c9003",
+      "job_id": "6c96c30e-eca6-4998-8b05-e384feab9988",
+      "version_id": "6ed611f2-da07-4ecb-8950-9e0beb0d7448",
+      "error": null,
+      "chunks": 1
+    },
+    {
+      "file": "hut-education-email.md",
+      "sources": [
+        "https://xjzx.hut.edu.cn/info/1261/5385.htm"
+      ],
+      "sha256": "96e7d995af52d2692cbd87028dd7f6fd00473609cf86b726c5079423935babd6",
+      "status": "ready",
+      "document_id": "2e6aeea4-9290-4260-b4ab-40dca8f1636f",
+      "job_id": "d689dee5-abed-4f30-8bd3-ce0185bee47c",
+      "version_id": "c27d8e86-7656-48e2-836c-a48fca5c835d",
+      "error": null,
+      "chunks": 1
+    },
+    {
+      "file": "hut-computer-room.md",
+      "sources": [
+        "https://xjzx.hut.edu.cn/info/1261/4504.htm"
+      ],
+      "sha256": "f2162c46b9ff851b3229c8476f0b08579dca7bcf3143ba9b0fd330df98d8f643",
+      "status": "ready",
+      "document_id": "212437ad-d19b-4be6-9b09-441f1842a8a4",
+      "job_id": "79704741-0bde-495f-852b-69a46b4e9581",
+      "version_id": "519f941c-4721-4422-8ff8-cb94413170e5",
+      "error": null,
+      "chunks": 1
+    },
+    {
+      "file": "hut-it-repair-2026.md",
+      "sources": [
+        "https://xjzx.hut.edu.cn/info/1371/6215.htm"
+      ],
+      "sha256": "8d94199e5fd3bc270e3bd669537d164a589beaf06998df7aaa51bf769b859741",
+      "status": "ready",
+      "document_id": "d5d41880-09a6-45ab-a97f-7f4483aaf634",
+      "job_id": "c4c86836-ad18-4983-adb8-b64425e08d74",
+      "version_id": "562fedf7-4ae1-4362-b255-a71565e18f89",
+      "error": null,
+      "chunks": 1
+    },
+    {
+      "file": "hut-student-affairs.md",
+      "sources": [
+        "https://xsc.hut.edu.cn/zzjg/bmjs.htm",
+        "https://xsc.hut.edu.cn/sqgl/xsswzx.htm"
+      ],
+      "sha256": "6f02d873e88a6b6d80fbb47bf00b7059de5578fc57e031ee2a4b8dc3aecfbdba",
+      "status": "ready",
+      "document_id": "7a300d04-fd6c-4d48-adb9-66a82a0335d6",
+      "job_id": "123aa4ba-6376-4032-80d8-18afeba611f3",
+      "version_id": "84812877-af4d-447e-a57e-a0dac0fb65bc",
+      "error": null,
+      "chunks": 1
+    },
+    {
+      "file": "hut-student-financial-aid.md",
+      "sources": [
+        "https://xsc.hut.edu.cn/zzjg/bmjs.htm",
+        "https://xsc.hut.edu.cn/xszz.htm"
+      ],
+      "sha256": "e3266bb64907fd10af657cab7f32edb3d8d855721b6b1cba7c9e9f2ec38e03cd",
+      "status": "ready",
+      "document_id": "9d14845c-dff4-40a3-868d-71f707c41188",
+      "job_id": "5982e26a-13c1-4ca7-bb02-d5db743c8128",
+      "version_id": "abca7f37-9d4f-4f9e-846c-877b4b0bfe57",
+      "error": null,
+      "chunks": 1
+    },
+    {
+      "file": "hut-work-study-2026.md",
+      "sources": [
+        "https://xsc.hut.edu.cn/info/1012/9625.htm",
+        "https://xsc.hut.edu.cn/info/1006/2865.htm"
+      ],
+      "sha256": "d609e72bfa1b1403137441fe5be84037ffe47c3558d75cdb4f0c23fac31b37f2",
+      "status": "ready",
+      "document_id": "61c68f49-5d8d-4238-b2a1-4c3f7e79cd3b",
+      "job_id": "43332e4a-19e7-4731-8d5b-dbe7cbeb3e3c",
+      "version_id": "83c67ea1-75e3-43b3-9e94-9580a4348050",
+      "error": null,
+      "chunks": 1
+    },
+    {
+      "file": "hut-dormitory-services.md",
+      "sources": [
+        "https://xsc.hut.edu.cn/zzjg/bmjs.htm"
+      ],
+      "sha256": "097faf2ba718a856ac30b784bdd30ed8462a87b8f9b45cf115f8ec5a30385969",
+      "status": "ready",
+      "document_id": "0421b9b2-46f7-4baf-a877-a38f5c2e3503",
+      "job_id": "8c74ef6e-66cf-4196-843d-b15fe760c18a",
+      "version_id": "4e293572-9ead-4487-a935-9d2a1daf4278",
+      "error": null,
+      "chunks": 1
+    },
+    {
+      "file": "hut-psychological-service.md",
+      "sources": [
+        "https://xsc.hut.edu.cn/zzjg/bmjs.htm",
+        "https://xsc.hut.edu.cn/xlfw.htm"
+      ],
+      "sha256": "9ae500f92983bc194dee6ee88028227c250acaa7efdd7939d6d11a0060823a1e",
+      "status": "ready",
+      "document_id": "d8d012a8-0185-4db7-9346-8bd9b28a945b",
+      "job_id": "eced305b-cd8c-400c-b2df-8ad193a0f46a",
+      "version_id": "94d73df9-a3a2-40e4-990c-7d066f6a2544",
+      "error": null,
+      "chunks": 1
+    },
+    {
+      "file": "hut-library-services.md",
+      "sources": [
+        "https://tsg.hut.edu.cn/entry/",
+        "https://www.hut.edu.cn/cyzd/xs.htm"
+      ],
+      "sha256": "a44cac1391e641bb16ac50cc3bfdad6313e02068d9b337c859a7b5bd3a632697",
+      "status": "ready",
+      "document_id": "64b8ca8a-8012-4539-ba0f-7a0dfbe280f1",
+      "job_id": "2d1794ae-edf0-4213-82e1-e94610da2ec6",
+      "version_id": "0ec00cf7-8446-4602-a92c-fcaf05e2bda1",
+      "error": null,
+      "chunks": 1
+    },
+    {
+      "file": "hut-employment-services.md",
+      "sources": [
+        "https://job.hut.edu.cn/",
+        "https://www.hut.edu.cn/cyzd/xs.htm"
+      ],
+      "sha256": "9771e0c2fb6a343d71ea672797c84c594080420f967dcf207662fbf451134501",
+      "status": "ready",
+      "document_id": "69c52669-c940-4683-96ba-c1b124ee84c2",
+      "job_id": "46e6f34b-fad0-4166-8cb1-ed25ff1c552f",
+      "version_id": "4c243e17-3c79-491d-86c6-e3b8a69f819e",
+      "error": null,
+      "chunks": 1
+    }
+  ],
+  "demo_visibility_changes": [
+    {
+      "document_id": "c57e7c35-5f8c-458c-a49e-62100d416dcb",
+      "name": "vpn-809.md",
+      "before": "public",
+      "after": "admin"
+    },
+    {
+      "document_id": "e7679332-705f-4b8a-a663-7784614b3dec",
+      "name": "campus-network.md",
+      "before": "public",
+      "after": "admin"
+    },
+    {
+      "document_id": "1cedaefb-6f95-4649-8406-e8bc3d863e24",
+      "name": "accounts.md",
+      "before": "public",
+      "after": "admin"
+    }
+  ],
+  "completed_at": "2026-10-10T08:17:11.016837+00:00"
+}
