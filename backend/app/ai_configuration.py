@@ -1,3 +1,6 @@
+import asyncio
+import time
+import uuid
 from typing import Literal
 from urllib.parse import urlsplit
 
@@ -9,7 +12,8 @@ from app.db import get_db
 from app.errors import AppError
 from app.models import AIConfiguration
 from app.providers import CompatibleProvider, provider
-from app.security import current_user
+from app.security import admin, current_user
+from app.tracing import record
 
 router = APIRouter(prefix="/api/v1/ai-config", tags=["AI configuration"])
 
@@ -106,5 +110,88 @@ async def test_configuration(body: AIConfigurationInput, user=Depends(current_us
     row = AIConfiguration(**body.model_dump(exclude={"api_key"}), api_key=key)
     model = configured_provider(row)
     db.commit()
-    await model.general_answer("你好，请简短回应。", [])
+    started, status = time.monotonic(), "failed"
+    try:
+        await model.general_answer("你好，请简短回应。", [])
+        status = "complete"
+    finally:
+        await asyncio.to_thread(
+            record, str(uuid.uuid4()), user.id, "personal_model_test", model, started, status
+        )
     return {"message": "连接成功，模型可正常回复"}
+
+
+@router.get("/status")
+def configuration_status(user=Depends(current_user), db=Depends(get_db)):
+    cfg = settings()
+    row = db.get(AIConfiguration, user.id)
+    server = {
+        "source": "服务器配置",
+        "mode": cfg.model_mode,
+        "model": "Mock" if cfg.model_mode == "mock" else cfg.llm_model,
+        "configured": cfg.model_mode == "mock" or bool(cfg.llm_api_key and cfg.llm_model),
+    }
+    chat = (
+        {
+            "source": "个人配置",
+            "mode": "real",
+            "model": row.model,
+            "configured": bool(row.api_key and row.model),
+        }
+        if row
+        else server
+    )
+    return {
+        "can_test_server": getattr(user, "role", "student") == "admin",
+        "features": [
+            {"feature": "知识问答、工单摘要", **chat},
+            {"feature": "学习问答、提纲、练习与评分", **server},
+            {"feature": "通知摘要", **server},
+            {
+                "feature": "联网搜索",
+                **server,
+                "configured": cfg.model_mode == "real" and cfg.llm_api_style == "deepseek",
+            },
+            {
+                "feature": "资料索引与检索",
+                "source": "服务器配置",
+                "mode": cfg.model_mode,
+                "model": "Mock" if cfg.model_mode == "mock" else cfg.embedding_model,
+                "configured": cfg.model_mode == "mock"
+                or bool(cfg.embedding_api_base and cfg.embedding_model),
+            },
+        ],
+    }
+
+
+class ServerTestInput(BaseModel):
+    kind: Literal["chat", "embedding"]
+
+
+@router.post("/server-test")
+async def test_server_configuration(body: ServerTestInput, user=Depends(admin)):
+    cfg = settings()
+    if cfg.model_mode == "mock":
+        return {"message": "服务器当前为模拟模式，未调用真实模型", "mode": "mock"}
+    model = provider()
+    started, status = time.monotonic(), "failed"
+    try:
+        if body.kind == "embedding":
+            vectors = await model.embed(["校园服务连接检测"])
+            if len(vectors) != 1 or len(vectors[0]) != cfg.embedding_dimensions:
+                raise AppError("EMBEDDING_OUTPUT", "嵌入模型维度不符合项目要求", 502)
+        else:
+            await model.general_answer("你好，请简短回应。", [])
+        status = "complete"
+    finally:
+        await asyncio.to_thread(
+            record,
+            str(uuid.uuid4()),
+            user.id,
+            "server_model_test",
+            model,
+            started,
+            status,
+            body.kind == "embedding",
+        )
+    return {"message": "服务器模型连接检测通过", "mode": "real"}

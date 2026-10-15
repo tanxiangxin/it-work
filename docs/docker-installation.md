@@ -1,5 +1,7 @@
 # 本机 Docker 安装记录（2026-10-09）
 
+本文记录旧机器安装历史。当前 `C:\ai\it-work` 已成功安装并运行 Docker Desktop，实际结果见 [2026-10-15 记录](verification-2026-10-15.md)；新环境操作以 [部署指南](deployment-guide.md) 为准。
+
 项目目录：`D:\vibe coding\ai-01`。
 
 **状态更新：用户已完成安装，现已启动 Docker Desktop Linux 引擎及项目。无需重复安装。原生 Compose、后端 26 项测试、前端锁文件安装、浏览器完整流程与重启持久化均已验证；当前结果和演示密码待授权恢复事项见 [目标环境验收](target-verification.md)。下文保留首次安装失败的历史记录。**

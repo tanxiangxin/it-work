@@ -22,6 +22,7 @@ def main():
     parser.add_argument("--cases", type=Path, default=ROOT / "samples/questions.json")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--email", default="student@example.test")
+    parser.add_argument("--origin", default=os.environ.get("PUBLIC_ORIGIN"))
     args = parser.parse_args()
     base = args.base_url.rstrip("/") + "/api/v1"
     opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
@@ -32,7 +33,7 @@ def main():
             urllib.request.Request(
                 base + path,
                 data=data,
-                headers={"Content-Type": "application/json", "Origin": args.base_url.rstrip("/")},
+                headers={"Content-Type": "application/json", "Origin": (args.origin or args.base_url).rstrip("/")},
             ),
             timeout=300,
         )
@@ -124,7 +125,7 @@ def main():
         output,
         "— expectation checks are not human answer accuracy; usage remains in request_traces.",
     )
-    raise SystemExit(1 if report["summary"]["failures"] else 0)
+    raise SystemExit(1 if report["summary"]["failures"] or report["summary"]["expectation_failures"] else 0)
 
 
 if __name__ == "__main__":

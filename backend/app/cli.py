@@ -1,17 +1,19 @@
 import asyncio
 import hashlib
+import io
 import os
 import shutil
 import sys
 import uuid
 from pathlib import Path
 
-from sqlalchemy import select
+from sqlalchemy import select, update
+from starlette.datastructures import UploadFile
 
 from app.config import settings
 from app.db import session
 from app.jobs import process_import
-from app.models import Document, DocumentVersion, ImportJob, User
+from app.models import Document, DocumentVersion, ImportJob, KnowledgeState, User
 from app.security import passwords
 from app.storage import storage
 
@@ -64,13 +66,69 @@ async def seed_documents():
         print(f"Imported {path.name}")
 
 
+async def reindex():
+    """Publish new versions for the current index; preserve source files and old versions."""
+    from app.main import add_version
+
+    with session() as db:
+        ids = list(
+            db.scalars(
+                select(Document.id).where(
+                    Document.deleted.is_(False),
+                    Document.archived.is_(False),
+                    Document.active_version_id.is_not(None),
+                )
+            )
+        )
+    failed = []
+    for id in ids:
+        with session() as db:
+            doc = db.scalar(select(Document).where(Document.id == id).with_for_update())
+            if not doc or doc.deleted or doc.archived:
+                continue
+            old = db.get(DocumentVersion, doc.active_version_id)
+            if old.index_key == settings().index_key and old.chunk_policy == settings().chunk_policy_key:
+                continue
+            upload = UploadFile(
+                filename=old.filename, file=io.BytesIO(storage.path(old.storage_key).read_bytes())
+            )
+            try:
+                job = await add_version(db, doc, upload)
+                job_id = job.id
+                if job.status == "ready":
+                    doc.active_version_id = job.version_id
+                    db.execute(
+                        update(KnowledgeState)
+                        .where(KnowledgeState.id == 1)
+                        .values(generation=KnowledgeState.generation + 1)
+                    )
+                elif job.status == "failed":
+                    version = db.get(DocumentVersion, job.version_id)
+                    job.status = version.status = "queued"
+                    job.error = version.error = job.lease_token = None
+                    job.attempts = 0
+                db.commit()
+            finally:
+                await upload.close()
+        await process_import(job_id)
+        with session() as db:
+            job = db.get(ImportJob, job_id)
+            print(f"Reindex {id}: {job.status}")
+            if job.status != "ready":
+                failed.append(str(id))
+    if failed:
+        raise SystemExit(f"Reindex failed for {len(failed)} document(s); old versions retained")
+
+
 def main():
     if len(sys.argv) < 2:
-        raise SystemExit("Usage: python -m app.cli seed | seed-documents | run-job UUID | recover")
+        raise SystemExit("Usage: python -m app.cli seed | seed-documents | reindex | run-job UUID | recover")
     if sys.argv[1] == "seed":
         seed()
     elif sys.argv[1] == "seed-documents":
         asyncio.run(seed_documents())
+    elif sys.argv[1] == "reindex":
+        asyncio.run(reindex())
     elif sys.argv[1] == "run-job":
         asyncio.run(process_import(sys.argv[2]))
     elif sys.argv[1] == "recover":

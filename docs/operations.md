@@ -1,5 +1,7 @@
 # 开发、部署与运维
 
+当前首次启动、真实模型与长期部署统一参见 [三条部署路径](deployment-guide.md)，本机验收见 [2026-10-15 记录](verification-2026-10-15.md)。下文包含早期环境的操作与结果，不能作为新环境已启用真实模型的依据。新增备份/隔离恢复脚本、额度和日志配置以部署指南为准。
+
 ## 本地开发
 
 先准备可用的 PostgreSQL 16 + pgvector 和 Redis。优先用 Compose，手动启动开发 API 时需在覆盖文件中临时为 postgres/redis 增加 localhost 绑定端口，或使用独立开发服务。不要直接把数据库和 Redis 端口绑定公网。
@@ -41,7 +43,7 @@ uv run ruff format --check app tests
 
 ## 真模型 M6
 
-聊天使用官方 `https://api.deepseek.com/v1` 与 `deepseek-flash`（V4.1 Flash），嵌入使用本地 Docker CPU `BAAI/bge-m3` 1024 维，见 [BGE-M3 接入步骤](bge-m3-setup.md)。DeepSeek 使用 max_tokens，默认关闭思考。当前部署已通过接入探针并启用真实模式，新环境仍先运行 Mock 再验证。
+推荐部署路径支持 `https://api.deepseek.com/v1` 与 `deepseek-flash`，嵌入使用本地 Docker CPU `BAAI/bge-m3` 1024 维，见 [BGE-M3 接入步骤](bge-m3-setup.md)。DeepSeek 使用 max_tokens，默认关闭思考。新环境先运行 Mock，填写密钥并通过探针后再切换真实模式。
 
 在 `.env` 设置 `MODEL_MODE=real`，分别填写 LLM_API_BASE / KEY / MODEL 和 EMBEDDING_API_BASE / KEY / MODEL。BASE 是 API 前缀，例如 `https://供应商地址/v1`，代码会追加 `/chat/completions` 或 `/embeddings`。需支持 JSON object 输出；响应格式不兼容会明确失败。Embedding 必须返回 1024 维；若模型固定维度且不接受 dimensions 参数，设置 `EMBEDDING_SEND_DIMENSIONS=false`。
 
@@ -57,7 +59,7 @@ docker compose up -d --force-recreate api worker scheduler
 
 ## 部署与备份
 
-当前嵌入使用本地 BGE-M3，Compose 通过 `COMPOSE_PROFILES=bge` 启动独立 CPU 服务，详见 [BGE-M3 接入](bge-m3-setup.md)。`embedding_cache` 保存可重新下载的权重缓存；业务备份仍以数据库和 files 卷为准。
+真实嵌入可使用本地 BGE-M3，通过 `COMPOSE_PROFILES=bge` 启动独立 CPU 服务；Mock 默认不启动该服务。`embedding_cache` 保存可重新下载的权重缓存；业务备份以数据库和 files 卷为准。优先使用 `scripts/backup.ps1` 和 `scripts/verify-restore.ps1` 执行备份与隔离演练，下列手动命令保留供排查参考。
 
 默认网关只绑定 `127.0.0.1:8080`。公网演示应先配置 HTTPS 入口，将 PUBLIC_ORIGIN 改为实际 HTTPS 源、COOKIE_SECURE=true；通过受控代理转发到 8080。文件、数据库、Redis 持久化卷分别为 `campus-it-assistant_files`、`campus-it-assistant_database`、`campus-it-assistant_redis`。模型密钥不要提交 Git。
 

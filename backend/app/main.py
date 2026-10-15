@@ -38,6 +38,8 @@ from app.schemas import (
 )
 from app.security import admin, current_user, make_session, passwords, token_hash
 from app.storage import storage
+from app.usage import UsageLeaseMiddleware, login_limit
+from app.usage import router as usage_router
 
 logger = logging.getLogger("campus")
 
@@ -50,6 +52,8 @@ async def lifespan(app):
 
 app = FastAPI(title="校园 IT 服务台", version="0.1.0", lifespan=lifespan)
 app.include_router(ai_configuration_router)
+app.include_router(usage_router)
+app.add_middleware(UsageLeaseMiddleware)
 API = "/api/v1"
 
 
@@ -78,7 +82,10 @@ async def request_context(request, call_next):
 
 @app.exception_handler(AppError)
 async def app_error(request, exc):
-    return error_response(request, exc.status, exc.code, exc.message)
+    response = error_response(request, exc.status, exc.code, exc.message)
+    if exc.status == 429:
+        response.headers["Retry-After"] = "60"
+    return response
 
 
 @app.exception_handler(RequestValidationError)
@@ -251,7 +258,8 @@ async def compare_retrieval(body: RetrievalCompareInput, user=Depends(current_us
 
 
 @app.post(API + "/auth/login")
-def login(body: LoginInput, response: Response, db=Depends(get_db)):
+def login(body: LoginInput, response: Response, request: Request, db=Depends(get_db)):
+    login_limit(request, body.email)
     user = db.scalar(select(m.User).where(m.User.email == body.email.lower().strip()))
     try:
         # Equalize expensive password verification for unknown users.

@@ -19,6 +19,7 @@ from app.security import current_user
 
 @pytest.fixture
 def config_client(monkeypatch):
+    monkeypatch.setattr("app.ai_configuration.record", lambda *args: None)
     engine = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
     User.__table__.create(engine)
     AIConfiguration.__table__.create(engine)

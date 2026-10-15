@@ -204,6 +204,22 @@ def test_model_failure_is_not_refusal_or_accuracy():
     assert summary["human_answer_accuracy"] is None and summary["cost"] is None
 
 
+def test_completed_protocol_is_not_a_quality_pass():
+    summary = summarize(
+        [
+            {
+                "status": "complete",
+                "elapsed_ms": 1,
+                "answerability_match": False,
+                "expected_document_cited": False,
+                "citations_verified": True,
+            }
+        ]
+    )
+    assert summary["failures"] == 0
+    assert summary["expectation_failures"] == 1
+
+
 @pytest.mark.asyncio
 async def test_local_bge_no_key_required_or_forwarded(monkeypatch):
     cfg = real_config(

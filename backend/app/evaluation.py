@@ -76,6 +76,18 @@ def summarize(results):
         "cases": len(results),
         "completed": len(completed),
         "failures": len(results) - len(completed),
+        "expectation_failures": sum(
+            any(
+                result.get(key) is False
+                for key in (
+                    "answerability_match",
+                    "answer_kind_match",
+                    "expected_document_cited",
+                    "citations_verified",
+                )
+            )
+            for result in completed
+        ),
         "answerability_matches": sum(result["answerability_match"] for result in completed),
         "answer_kind_checks": sum(result.get("answer_kind_match") is not None for result in completed),
         "answer_kind_matches": sum(result.get("answer_kind_match") is True for result in completed),

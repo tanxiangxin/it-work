@@ -1,3 +1,4 @@
+import math
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
@@ -43,9 +44,27 @@ class Settings(BaseSettings):
     job_timeout_seconds: int = 600
     demo_student_password: str = ""
     demo_admin_password: str = ""
+    rate_limit_enabled: bool = True
+    login_per_minute: int = Field(default=60, ge=1)
+    login_account_per_minute: int = Field(default=10, ge=1)
+    ai_per_minute: int = Field(default=20, ge=1)
+    ai_daily_requests: int = Field(default=200, ge=1)
+    upload_per_minute: int = Field(default=10, ge=1)
+    user_concurrent_requests: int = Field(default=2, ge=1)
+    user_active_jobs: int = Field(default=3, ge=1)
+    model_prices: dict[str, dict[str, float]] = Field(default_factory=dict)
 
     @model_validator(mode="after")
     def validate_configuration(self):
+        for model, price in self.model_prices.items():
+            if (
+                not model.strip()
+                or set(price) != {"input", "output"}
+                or any(not math.isfinite(value) or value < 0 for value in price.values())
+            ):
+                raise ValueError(
+                    "MODEL_PRICES requires a model name and finite nonnegative input/output CNY rates"
+                )
         if self.model_mode not in {"mock", "real"}:
             raise ValueError("MODEL_MODE must be mock or real")
         if self.embedding_dimensions != 1024:

@@ -25,7 +25,11 @@ def current_user(request: Request, db=Depends(get_db)):
     )
     if not login:
         raise AppError("UNAUTHENTICATED", "请先登录", 401)
-    return db.get(User, login.user_id)
+    user = db.get(User, login.user_id)
+    from app.usage import begin_request
+
+    begin_request(request, user, db)
+    return user
 
 
 def admin(user=Depends(current_user)):
